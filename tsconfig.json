@@ -1,0 +1,46 @@
+{
+  "compilerOptions": {
+    "allowJs": true,
+    "allowSyntheticDefaultImports": true,
+    "experimentalDecorators": true,
+    "jsx": "react-native",
+    "module": "es2015",
+    "moduleResolution": "node",
+    "noImplicitAny": false,
+    "noImplicitReturns": true,
+    "noImplicitThis": true,
+    "noUnusedLocals": true,
+    "sourceMap": true,
+    "strict": true,
+    "forceConsistentCasingInFileNames": true,
+    "target": "esnext",
+    "typeRoots": [
+      "node_modules/@types",
+      "app/types"
+    ],
+    "lib": [
+      "esnext",
+      "dom"
+    ],
+    "skipLibCheck": true,
+    "resolveJsonModule": true,
+    "baseUrl": "./",
+    "paths": {
+      "@app/*": [
+        "app/*/index",
+        "app/*"
+      ]
+    },
+  },
+  "exclude": [
+    "node_modules",
+  ],
+  "include": [
+    "index.js",
+    "app",
+    "test",
+    "**/*.config.js",
+    "declarations.d.ts",
+    "./bin"
+  ]
+}

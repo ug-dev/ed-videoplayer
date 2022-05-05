@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
 import { Dropdown } from 'react-native-element-dropdown';
-import { SafeAreaView, View, Text } from 'react-native';
+import { SafeAreaView, View, Text, ScrollView } from 'react-native';
 import AuthHeader from '../Components/AuthHeader';
 import PrimaryButton from '../Components/PrimaryButton';
 import STYLES from '../Styles/Subscription.style';
-import { Checkbox } from 'react-native-paper';
+import BouncyCheckbox from 'react-native-bouncy-checkbox';
 import { Safety } from '@app/assets';
 import { navigateAndSimpleReset } from '@app/navigators';
 
@@ -17,10 +17,11 @@ const DATA = [
     { label: 'Value 3', value: '3' },
 ];
 
+const checkBoxData = ['English', 'Maths', 'Gujarati', 'Science', 'Social Science'];
+
 const Subscription: React.FC<SubscriptionProps> = () => {
     const [boardValue, setBoardValue] = useState(null);
     const [stdValue, setStdValue] = useState(null);
-    const [checked, setChecked] = useState(false);
 
     const renderBoards = (item: any) => {
         return (
@@ -87,17 +88,22 @@ const Subscription: React.FC<SubscriptionProps> = () => {
                     </View>
                     <View style={STYLES.marginT}>
                         <Text style={STYLES.selectText}>Select Subjects</Text>
-                        <View style={STYLES.checkboxContainer}>
-                            <Checkbox
-                                status={checked ? 'checked' : 'unchecked'}
-                                color={'#2A368A'}
-                                uncheckedColor={'#2A368A'}
-                                onPress={() => {
-                                    setChecked(!checked);
-                                }}
-                            />
-                            <Text style={STYLES.checkboxValue}>Subject</Text>
-                        </View>
+                        <ScrollView style={STYLES.checkboxContainer}>
+                            {checkBoxData.map((item) => {
+                                return (
+                                    <BouncyCheckbox
+                                        size={25}
+                                        style={STYLES.checkboxStyle}
+                                        fillColor="#2A368A"
+                                        unfillColor="#FFFFFF"
+                                        textStyle={STYLES.checkBoxTextStyle}
+                                        text={item}
+                                        iconStyle={STYLES.checkBoxIconStyle}
+                                        onPress={(isChecked: boolean) => {}}
+                                    />
+                                );
+                            })}
+                        </ScrollView>
                     </View>
                 </View>
                 <View>

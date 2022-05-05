@@ -57,6 +57,9 @@ export default StyleSheet.create({
     price: { color: '#404B63', textAlign: 'center', fontSize: 24, fontWeight: 'bold' },
     desclaimer: { color: '#8C93A1', textAlign: 'center', marginTop: 12 },
     selectText: { color: '#404B63', fontSize: 16, marginBottom: 12 },
-    checkboxContainer: { flexDirection: 'row', alignItems: 'center' },
+    checkboxContainer: { marginTop: 0, width: '100%' },
     checkboxValue: { color: '#404B63', fontSize: 16 },
+    checkboxStyle: { marginVertical: 8 },
+    checkBoxTextStyle: { textDecorationLine: 'none', color: '#404B63' },
+    checkBoxIconStyle: { borderColor: '#2A368A', borderRadius: 6 },
 });

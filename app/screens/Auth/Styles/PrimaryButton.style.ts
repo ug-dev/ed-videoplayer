@@ -7,6 +7,7 @@ export default StyleSheet.create({
         alignItems: 'center',
         marginTop: 24,
         height: 55,
+        width: '100%',
         borderRadius: 18,
     },
     text: { color: '#fff', fontWeight: 'bold', fontSize: 18, letterSpacing: 1 },

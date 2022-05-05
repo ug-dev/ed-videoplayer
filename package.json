@@ -47,6 +47,7 @@
     "react-native": "0.66.4",
     "react-native-background-timer": "^2.4.1",
     "react-native-dotenv": "^3.3.1",
+    "react-native-element-dropdown": "^1.8.10",
     "react-native-elements": "^3.4.2",
     "react-native-extra-dimensions-android": "^1.2.5",
     "react-native-flipper": "^0.127.0",

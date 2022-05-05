@@ -23,6 +23,7 @@ import VideoPlayerBack from './icons/VideoPlayerBack.svg';
 import VideoPlayerLike from './icons/VideoPlayerLike.svg';
 import JsIcon from './icons/JsIcon.svg';
 import ImportantCardBg from './icons/ImportantCardBg.svg';
+import Safety from './icons/Safety.svg';
 
 export {
     Right,
@@ -50,4 +51,5 @@ export {
     RKLogo,
     JsCrash,
     ImportantCardBg,
+    Safety,
 };

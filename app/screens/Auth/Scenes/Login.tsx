@@ -1,4 +1,4 @@
-import { navigate } from '@app/navigators';
+import { navigate, navigateAndSimpleReset } from '@app/navigators';
 import React from 'react';
 import { Pressable, SafeAreaView, Text, View } from 'react-native';
 import AuthHeader from '../Components/AuthHeader';
@@ -26,7 +26,7 @@ const Login: React.FC<LoginProps> = () => {
                         <Text style={STYLES.forgotPasswordText}>Forgot Password?</Text>
                     </Pressable>
 
-                    <PrimaryButton InputText={'Login'} />
+                    <PrimaryButton InputText={'Login'} OnPress={() => navigateAndSimpleReset('HomeNavigator')} />
                 </View>
                 <Pressable onPress={() => navigate('SignUp')}>
                     <Text style={STYLES.lowerText}>

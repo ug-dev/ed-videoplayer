@@ -1,3 +1,4 @@
+import { navigate } from '@app/navigators';
 import React from 'react';
 import { SafeAreaView, View } from 'react-native';
 import AuthHeader from '../Components/AuthHeader';
@@ -18,7 +19,7 @@ const SignUp: React.FC<SignUpProps> = () => {
                     <InputBox InputString="Email Address" />
                     <InputBox InputString="Password" />
                 </View>
-                <PrimaryButton InputText={'SignUp'} />
+                <PrimaryButton InputText={'SignUp'} OnPress={() => navigate('Subscription')} />
                 {/* <Text style={{ color: '#828282', fontSize: 14, lineHeight: 20, marginTop: 24 }}>
                     Desclaimer: you can only use this account in this device
                 </Text> */}

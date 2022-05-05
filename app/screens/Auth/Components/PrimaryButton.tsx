@@ -1,11 +1,15 @@
 import React from 'react';
-import { navigateAndSimpleReset } from '@app/navigators';
 import { Pressable, Text } from 'react-native';
 import STYLES from '../Styles/PrimaryButton.style';
 
-const PrimaryButton = ({ InputText }) => {
+interface PrimaryButtonProps {
+    InputText: string;
+    OnPress?: () => void;
+}
+
+const PrimaryButton: React.FC<PrimaryButtonProps> = ({ InputText, OnPress }) => {
     return (
-        <Pressable onPress={() => navigateAndSimpleReset('HomeNavigator')} style={STYLES.primaryButtonConatiner}>
+        <Pressable onPress={OnPress || null} style={STYLES.primaryButtonConatiner}>
             <Text style={STYLES.text}>{InputText}</Text>
         </Pressable>
     );

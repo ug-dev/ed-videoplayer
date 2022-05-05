@@ -8,7 +8,8 @@ import STYLES from '../Styles/Video.style';
 import VideoPlayer from '../Components/VideoPlayer';
 
 interface VideoProps {
-    setShowTabNavigator: () => void;
+    setShowTabNavigator?: () => void;
+    fullscreen: boolean | string;
 }
 
 const VideoScreen: React.FC<VideoProps> = (props) => {

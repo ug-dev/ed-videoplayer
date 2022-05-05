@@ -1,6 +1,6 @@
 import React from 'react';
 import { View, Text, TextInput, Pressable } from 'react-native';
-import styles from './SearchBar.styles';
+import styles from '../Styles/SearchBar.styles';
 import Search from '../../../assets/icons/search.svg';
 
 const SearchBar = (props) => {

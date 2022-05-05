@@ -1,3 +1,4 @@
+import { navigate } from '@app/navigators';
 import React, { useState } from 'react';
 import { Dimensions, Pressable, SafeAreaView, ScrollView, Text, View } from 'react-native';
 import { Shadow } from 'react-native-neomorph-shadows';
@@ -23,7 +24,7 @@ const SubjectCard = (props) => {
                 marginVertical: 10,
             }}
         >
-            <View style={styles.subjectCard}>
+            <Pressable onPress={() => navigate('Video')} style={styles.subjectCard}>
                 <View style={[styles.logoContainer, { backgroundColor: backgroundColor }]}>
                     <Logo />
                 </View>
@@ -31,7 +32,7 @@ const SubjectCard = (props) => {
                     <Text style={styles.subjectText}>{subjectText}</Text>
                     <Text style={styles.nameText}>{name}</Text>
                 </View>
-            </View>
+            </Pressable>
         </Shadow>
     );
 };

@@ -11,14 +11,12 @@ import { useColorScheme } from 'react-native';
 import { AuthStack } from './AuthNav';
 import { HomeNavigator } from './HomeNavigator';
 import { navigationRef } from './navigation-utilities';
+import { PlayerNav } from './PlayerNav';
 
 export type NavigatorParamList = {
     AuthStack: undefined;
-    ChatStack: undefined;
-    CallStack: undefined;
     HomeNavigator: undefined;
-    VideoPlayerNavigator: undefined;
-    Scanner: undefined;
+    PlayerNav: undefined;
 };
 
 const Stack = createNativeStackNavigator<NavigatorParamList>();
@@ -33,6 +31,7 @@ const AppStack = () => {
         >
             <Stack.Screen name="AuthStack" component={AuthStack} />
             <Stack.Screen name="HomeNavigator" component={HomeNavigator} />
+            <Stack.Screen name="PlayerNav" component={PlayerNav} />
         </Stack.Navigator>
     );
 };

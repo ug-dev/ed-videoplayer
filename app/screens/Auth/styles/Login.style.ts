@@ -1,36 +1,27 @@
-import { COLORS, FONTS } from '@app/theme';
-import { SIZES } from '@app/theme/fonts';
-import { Platform, StyleSheet } from 'react-native';
+import { StyleSheet } from 'react-native';
 
 export default StyleSheet.create({
-    CONTAINER: {
-        width: SIZES.width,
-        alignItems: 'center',
+    loginContainer: {
+        backgroundColor: '#fff',
+        paddingHorizontal: 16,
+        paddingBottom: 18,
         justifyContent: 'space-between',
-        backgroundColor: COLORS.background,
+        width: '100%',
+        height: '100%',
     },
-    HEADING: {
-        ...FONTS.h2,
-    },
-    INPUT_BG: {
-        width: '90%',
-        marginTop: 40,
-    },
-    INPUT_HEADING: {
-        ...FONTS.body6,
-    },
-    INPUT: {
-        ...FONTS.body5,
-        height: 48,
-        borderRadius: 6,
+    loginTopText: { color: '#B8C0C9', fontSize: 16, lineHeight: 24 },
+    inputBoxContainer: { marginTop: 44 },
+    forgotPasswordText: {
+        color: '#404B63',
+        alignSelf: 'flex-end',
         marginTop: 12,
-        // paddingBottom: Platform.OS === 'ios' ? 3 : 0,
-        paddingHorizontal: 14,
-        backgroundColor: COLORS.secondaryBackground,
+        textDecorationLine: 'underline',
     },
-    TOP_CONTAINER: {
-        marginTop: 12,
-        width: SIZES.width,
-        alignItems: 'center',
+    lowerText: {
+        color: '#B8C0C9',
+        fontSize: 14,
+        textAlign: 'center',
+        justifyContent: 'center',
     },
+    signUpText: { color: '#2A368A', fontSize: 14 },
 });

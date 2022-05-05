@@ -1,10 +1,11 @@
 import React, { useState } from 'react';
-import { View, Text, TextInput } from 'react-native';
+import { View, Text, TextInput, Pressable } from 'react-native';
 import styles from '../Styles/subject.styles';
 import Search from '../../../assets/icons/search.svg';
 import SearchBar from '../Components/SearchBar';
 import { Shadow } from 'react-native-neomorph-shadows';
 import { SIZES } from '@app/theme/fonts';
+import { navigate } from '@app/navigators';
 
 const SubjectCard = (props) => {
     const { Logo, name, backgroundColor } = props;
@@ -23,14 +24,14 @@ const SubjectCard = (props) => {
                 marginVertical: 10,
             }}
         >
-            <View style={styles.subjectCard}>
+            <Pressable onPress={() => navigate('PlayerNav')} style={styles.subjectCard}>
                 <View style={[styles.logoContainer, { backgroundColor: backgroundColor }]}>
                     <Logo />
                 </View>
                 <View style={styles.nameContainer}>
                     <Text style={styles.nameText}>{name}</Text>
                 </View>
-            </View>
+            </Pressable>
         </Shadow>
     );
 };

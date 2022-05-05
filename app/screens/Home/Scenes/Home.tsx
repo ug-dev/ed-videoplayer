@@ -1,10 +1,11 @@
 import { JsCrash } from '@app/assets';
 import React, { useState } from 'react';
-import { SafeAreaView, ScrollView, Text, View } from 'react-native';
+import { Pressable, SafeAreaView, ScrollView, Text, View } from 'react-native';
 import SearchBar from '../Components/SearchBar';
 import HomeCardView from '../Components/HomeCardView';
 import STYLES from '../Styles/Home.style';
 import AuthHeader from '@app/screens/Auth/Components/AuthHeader';
+import { navigate } from '@app/navigators';
 
 // eslint-disable-next-line @typescript-eslint/no-empty-interface
 interface HomeProps {}
@@ -25,9 +26,12 @@ const Home: React.FC<HomeProps> = () => {
                 </View>
 
                 <View style={STYLES.bottomSection}>
-                    <Text style={STYLES.textContainer}>
-                        Last watched <Text style={STYLES.impText}> Important</Text>
-                    </Text>
+                    <View style={STYLES.textContainer}>
+                        <Text style={STYLES.firstText}>Last watched</Text>
+                        <Pressable onPress={() => navigate('PlayerNav', { screen: 'ContinueLearn' })}>
+                            <Text style={STYLES.viewAllContainer}>View All</Text>
+                        </Pressable>
+                    </View>
 
                     <ScrollView horizontal>
                         <HomeCardView />

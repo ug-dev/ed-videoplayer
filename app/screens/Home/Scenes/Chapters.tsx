@@ -1,29 +1,16 @@
 import { navigate } from '@app/navigators';
 import React, { useState } from 'react';
-import { Dimensions, Pressable, SafeAreaView, ScrollView, Text, View } from 'react-native';
+import { Pressable, SafeAreaView, ScrollView, Text, View } from 'react-native';
 import { Shadow } from 'react-native-neomorph-shadows';
 import Search from '../../../assets/icons/search.svg';
 import SearchBar from '../Components/SearchBar';
 import styles from '../Styles/chapters.styles';
-// import { Shadow } from 'react-native-neomorph-shadows';
-const { width, height } = Dimensions.get('window');
+
 const SubjectCard = (props) => {
     const { Logo, name, backgroundColor, subjectText } = props;
 
     return (
-        <Shadow
-            style={{
-                shadowOffset: { width: 2, height: 6 },
-                shadowOpacity: 0.1,
-                shadowColor: '#404B63',
-                shadowRadius: 10,
-                borderRadius: 20,
-                backgroundColor: '#FFF',
-                width: width - 36,
-                height: (width - 36) * 0.3,
-                marginVertical: 10,
-            }}
-        >
+        <Shadow style={styles.shadowContainer}>
             <Pressable onPress={() => navigate('Video')} style={styles.subjectCard}>
                 <View style={[styles.logoContainer, { backgroundColor: backgroundColor }]}>
                     <Logo />
@@ -42,58 +29,31 @@ const Chapters = () => {
     const [toggleSwitch, setToggleSwitch] = useState(false);
 
     return (
-        <SafeAreaView style={{ flex: 1 }}>
+        <SafeAreaView style={styles.outer}>
             <View style={styles.container}>
-                <View style={{ paddingHorizontal: 16, marginTop: 12 }}>
-                    <SearchBar value={searchQuery} onChangeText={(value) => setSearchQuery(value)} />
+                <View style={styles.searchBarContainer}>
+                    <SearchBar value={searchQuery} onChangeText={(value: string) => setSearchQuery(value)} />
                 </View>
 
                 <View style={styles.titleContainer}>
                     <Text style={styles.titleText}>Maths</Text>
-                    <Shadow
-                        style={{
-                            shadowOffset: { width: 1, height: 2 },
-                            shadowOpacity: 0.1,
-                            shadowColor: '#404B63',
-                            shadowRadius: 10,
-                            borderRadius: 20,
-                            backgroundColor: '#FFF',
-                            width: (width - 36) * 0.45,
-                            height: 36,
-                        }}
-                    >
+                    <Shadow style={styles.navShadowContainer}>
                         <Pressable onPress={() => setToggleSwitch(!toggleSwitch)}>
                             <View style={styles.languagesContainer}>
-                                <View style={[styles.languagesLeft, toggleSwitch && { backgroundColor: '#2A368A' }]}>
-                                    <Text style={{ color: toggleSwitch ? 'white' : 'black' }}>English</Text>
+                                <View style={[styles.languagesLeft, toggleSwitch && styles.navBg]}>
+                                    <Text style={toggleSwitch ? styles.white : styles.black}>English</Text>
                                 </View>
-                                <View
-                                    style={[
-                                        styles.languagesRight,
-                                        !toggleSwitch && {
-                                            backgroundColor: '#2A368A',
-                                        },
-                                    ]}
-                                >
-                                    <Text style={{ color: !toggleSwitch ? 'white' : 'black' }}>Gujarati</Text>
+                                <View style={[styles.languagesRight, !toggleSwitch && styles.navBg]}>
+                                    <Text style={!toggleSwitch ? styles.white : styles.black}>Gujarati</Text>
                                 </View>
                             </View>
                         </Pressable>
                     </Shadow>
                 </View>
-                <ScrollView contentContainerStyle={{ alignItems: 'center' }} style={styles.container}>
+                <ScrollView contentContainerStyle={styles.scrollContainer} style={styles.container}>
                     <SubjectCard Logo={Search} subjectText="Maths" name="Maths" backgroundColor="#070C19" />
                     <SubjectCard Logo={Search} subjectText="Maths" name="Science" backgroundColor="blue" />
                     <SubjectCard Logo={Search} subjectText="Maths" name="Science" backgroundColor="#F0DB4F" />
-                    <SubjectCard Logo={Search} subjectText="Maths" name="Science" backgroundColor="pink" />
-                    <SubjectCard Logo={Search} subjectText="Maths" name="Science" backgroundColor="pink" />
-                    <SubjectCard Logo={Search} subjectText="Maths" name="Science" backgroundColor="pink" />
-                    <SubjectCard Logo={Search} subjectText="Maths" name="Science" backgroundColor="pink" />
-                    <SubjectCard Logo={Search} subjectText="Maths" name="Science" backgroundColor="pink" />
-                    <SubjectCard Logo={Search} subjectText="Maths" name="Science" backgroundColor="pink" />
-                    <SubjectCard Logo={Search} subjectText="Maths" name="Science" backgroundColor="pink" />
-                    <SubjectCard Logo={Search} subjectText="Maths" name="Science" backgroundColor="pink" />
-                    <SubjectCard Logo={Search} subjectText="Maths" name="Science" backgroundColor="pink" />
                     <SubjectCard Logo={Search} subjectText="Maths" name="Science" backgroundColor="pink" />
                 </ScrollView>
             </View>

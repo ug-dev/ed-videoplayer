@@ -1,3 +1,4 @@
+import { SIZES } from '@app/theme/fonts';
 import { StyleSheet, Dimensions } from 'react-native';
 
 const { width, height } = Dimensions.get('screen');
@@ -54,5 +55,16 @@ export default StyleSheet.create({
         borderRadius: 18,
 
         // width: '100%',
+    },
+    shadowContainer: {
+        shadowOffset: { width: 2, height: 6 },
+        shadowOpacity: 0.1,
+        shadowColor: '#404B63',
+        shadowRadius: 10,
+        borderRadius: 20,
+        backgroundColor: '#FFF',
+        width: SIZES.width - 36,
+        height: (SIZES.width - 36) * 0.3,
+        marginVertical: 10,
     },
 });

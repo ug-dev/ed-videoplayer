@@ -22,6 +22,7 @@ import JsCrash from './icons/jsCrash.svg';
 import VideoPlayerBack from './icons/VideoPlayerBack.svg';
 import VideoPlayerLike from './icons/VideoPlayerLike.svg';
 import JsIcon from './icons/JsIcon.svg';
+import ImportantCardBg from './icons/ImportantCardBg.svg';
 
 export {
     Right,
@@ -48,4 +49,5 @@ export {
     Scanner,
     RKLogo,
     JsCrash,
+    ImportantCardBg,
 };

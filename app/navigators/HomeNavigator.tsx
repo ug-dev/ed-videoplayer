@@ -54,7 +54,6 @@ export const HomeNavigator = () => {
             <Tab.Screen
                 name="Player"
                 component={Subject}
-                // children={() => <Video fullscreen={fullscreen} setShowTabNavigator={setShowTabNavigator} />}
                 options={{
                     tabBarIcon: ({ focused }) => (
                         <VPPlayer style={[{ opacity: 0.6 }, focused && { opacity: 1 }]} width={26} height={26} />

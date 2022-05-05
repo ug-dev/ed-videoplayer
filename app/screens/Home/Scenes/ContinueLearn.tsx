@@ -1,49 +1,36 @@
-import { RKLogo } from '@app/assets';
-import React, { useState } from 'react';
-import { Dimensions, Pressable, SafeAreaView, ScrollView, Text, View } from 'react-native';
+import { navigate } from '@app/navigators';
+import AuthHeader from '@app/screens/Auth/Components/AuthHeader';
+import React from 'react';
+import { Pressable, SafeAreaView, ScrollView, Text, View } from 'react-native';
 import { ProgressBar } from 'react-native-paper';
 import Search from '../../../assets/icons/search.svg';
 import styles from '../Styles/chapters.styles';
+
 const SubjectCard = (props) => {
     const { Logo, name, backgroundColor, subjectText } = props;
 
     return (
-        <View style={[styles.subjectCard, { marginVertical: 8 }]}>
+        <Pressable onPress={() => navigate('Video')} style={[styles.subjectCard, styles.marginV]}>
             <View style={[styles.logoContainer, { backgroundColor: backgroundColor }]}>
                 <Logo />
             </View>
             <View style={styles.nameContainer}>
                 <Text style={styles.subjectText}>{subjectText}</Text>
                 <Text style={styles.nameText}>{name}</Text>
-                <ProgressBar style={{ height: 6, marginTop: 6, borderRadius: 12 }} progress={0.5} color={'#2A368A'} />
-                <Text style={{ color: '#2A368A', marginTop: 4, fontSize: 14 }}>00:02:20</Text>
+                <ProgressBar style={styles.progressBar} progress={0.5} color={'#2A368A'} />
+                <Text style={styles.time}>00:02:20</Text>
             </View>
-        </View>
+        </Pressable>
     );
 };
 
 const ContinueLearn = () => {
-    const [searchQuery, setSearchQuery] = useState('');
-    const [toggleSwitch, setToggleSwitch] = useState(false);
-
     return (
-        <SafeAreaView style={{ flex: 1, backgroundColor: 'white' }}>
-            <View
-                style={{
-                    position: 'relative',
-                    alignItems: 'center',
-                    flexDirection: 'row',
-                    width: '100%',
-                    paddingHorizontal: 16,
-                    height: 60,
-                }}
-            >
-                <RKLogo />
-                <Text style={{ color: '#404B63', fontWeight: 'bold', fontSize: 20, marginLeft: 12 }}>
-                    Continue Learning
-                </Text>
+        <SafeAreaView style={styles.outer}>
+            <View style={styles.paddingH}>
+                <AuthHeader Title="Continue Learn" />
             </View>
-            <ScrollView contentContainerStyle={{ alignItems: 'center' }} style={styles.container}>
+            <ScrollView contentContainerStyle={styles.alignC} style={styles.container}>
                 <SubjectCard Logo={Search} subjectText="Umang Gadhavana" name="Java A to Z" backgroundColor="#070C19" />
                 <SubjectCard Logo={Search} subjectText="Maths" name="Science" backgroundColor="blue" />
                 <SubjectCard Logo={Search} subjectText="Maths" name="Science" backgroundColor="#F0DB4F" />

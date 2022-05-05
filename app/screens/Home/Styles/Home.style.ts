@@ -15,6 +15,13 @@ export default StyleSheet.create({
     bannerInnerImage: { alignSelf: 'flex-end', marginEnd: 12 },
     bannerInnerText: { color: '#fff', fontWeight: 'bold', fontSize: 18 },
     bottomSection: { marginTop: 24 },
-    textContainer: { paddingHorizontal: 16, color: '#121212', fontWeight: 'bold', fontSize: 20 },
+    textContainer: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: 'space-between',
+        paddingHorizontal: 16,
+    },
+    firstText: { color: '#121212', fontWeight: 'bold', fontSize: 20 },
     impText: { color: '#AFAFAF', fontSize: 16 },
+    viewAllContainer: { color: '#121212', textTransform: 'uppercase', fontSize: 16 },
 });

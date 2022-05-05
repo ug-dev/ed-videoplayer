@@ -29,7 +29,7 @@ const AppStack = () => {
             screenOptions={{
                 headerShown: false,
             }}
-            initialRouteName="HomeNavigator"
+            initialRouteName="AuthStack"
         >
             <Stack.Screen name="AuthStack" component={AuthStack} />
             <Stack.Screen name="HomeNavigator" component={HomeNavigator} />

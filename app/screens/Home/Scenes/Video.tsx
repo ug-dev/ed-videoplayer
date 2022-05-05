@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react';
-import { VLCPlayer, VlCPlayerView } from 'react-native-vlc-media-player';
 import Orientation from 'react-native-orientation';
 import { Dimensions, Image, Pressable, SafeAreaView, StyleSheet, Text, View } from 'react-native';
 import VideoPlayer from 'react-native-video-controls';

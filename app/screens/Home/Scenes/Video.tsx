@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Image, Pressable, SafeAreaView, Text, View } from 'react-native';
-import { useVideoCtx, ScreenContainer } from 'react-native-video-extension';
+import { ScreenContainer } from 'react-native-video-extension';
 import { SIZES } from '@app/theme/fonts';
 import { RKLogo, VideoPlayerBack, VideoPlayerLike } from '@app/assets';
 import SystemNavigationBar from 'react-native-system-navigation-bar';
@@ -35,7 +35,7 @@ const VideoScreen: React.FC<VideoProps> = (props) => {
                             STYLES.defaultPlayerContainer,
                         ]}
                     >
-                        <VideoPlayer URL={VIDEO_URL} fullscreen={fullscreen} />
+                        <VideoPlayer URL={VIDEO_URL} />
                     </View>
                 ) : (
                     <View>

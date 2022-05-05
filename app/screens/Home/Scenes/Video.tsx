@@ -5,95 +5,114 @@ import VideoPlayer from 'react-native-video-controls';
 import { FacebookPlayer, ScreenContainer, useVideoCtx, YoutubePlayer } from 'react-native-video-extension';
 import { SIZES } from '@app/theme/fonts';
 import { RKLogo, VideoPlayerBack, VideoPlayerLike } from '@app/assets';
+import SystemNavigationBar from 'react-native-system-navigation-bar';
 
-interface VideoProps {}
+interface VideoProps {
+    setShowTabNavigator: () => void;
+}
 
 const screenWidth = Dimensions.get('window').width;
 const screenHeight = Dimensions.get('window').height;
 
-const Video: React.FC<VideoProps> = () => {
+const Video: React.FC<VideoProps> = (props) => {
+    const { setShowTabNavigator } = props;
+
     const url = ['https://your-url.com/video.mp4'];
     const [isPlayer, setIsPlayer] = useState(false);
 
+    const { fullscreen } = useVideoCtx();
+    useEffect(() => {
+        if (fullscreen) {
+            SystemNavigationBar.navigationHide();
+
+            setShowTabNavigator({ display: 'none' });
+        } else {
+            SystemNavigationBar.navigationShow();
+
+            setShowTabNavigator({});
+        }
+    }, [fullscreen]);
+
     return (
+        // <ScreenContainer>
+        //     {({ fullscreen }) => {
+        // return (
         <SafeAreaView style={{ flex: 1 }}>
-            <ScreenContainer>
-                {({ fullscreen }) => {
-                    return (
+            <View
+                style={{
+                    flex: 1,
+                    backgroundColor: '#FFF',
+                }}
+            >
+                {isPlayer ? (
+                    <View
+                        style={[
+                            !fullscreen ? { width: SIZES.width, height: SIZES.height * 0.25 } : { flex: 1 },
+                            {
+                                alignItems: 'center',
+                                justifyContent: 'center',
+                                // important, try removing flex: 1 and enter fullscreen
+                            },
+                        ]}
+                    >
+                        <FacebookPlayer
+                            mode="auto-fit"
+                            source={{
+                                uri: 'https://stream.mux.com/Tyu80069gbkJR2uIYlz2xARq8VOl4dLg3.m3u8',
+                            }}
+                        />
+                    </View>
+                ) : (
+                    <View>
                         <View
                             style={{
-                                flex: 1,
-                                backgroundColor: '#FFF',
+                                position: 'absolute',
+                                zIndex: 1,
+                                width: SIZES.width,
+                                paddingHorizontal: 18,
+                                paddingTop: 16,
+                                backgroundColor: 'transparent',
+                                flexDirection: 'row',
+                                justifyContent: 'space-between',
                             }}
                         >
-                            {isPlayer ? (
-                                <View
-                                    style={{
-                                        width: SIZES.width,
-                                        height: SIZES.height * 0.25,
-                                        alignItems: 'center',
-                                        justifyContent: 'center',
-                                        // important, try removing flex: 1 and enter fullscreen
-                                    }}
-                                >
-                                    <FacebookPlayer
-                                        mode="auto-fit"
-                                        source={{
-                                            uri: 'https://stream.mux.com/Tyu80069gbkJR2uIYlz2xARq8VOl4dLg3.m3u8',
-                                        }}
-                                    />
-                                </View>
-                            ) : (
-                                <View>
-                                    <View
-                                        style={{
-                                            position: 'absolute',
-                                            zIndex: 1,
-                                            width: SIZES.width,
-                                            paddingHorizontal: 18,
-                                            paddingTop: 16,
-                                            backgroundColor: 'transparent',
-                                            flexDirection: 'row',
-                                            justifyContent: 'space-between',
-                                        }}
-                                    >
-                                        <VideoPlayerBack height="40" width="40" />
-                                        <VideoPlayerLike height="40" width="40" />
-                                    </View>
-                                    <Image
-                                        style={{ width: SIZES.width, height: SIZES.height * 0.3 }}
-                                        source={require('../../../assets/images/VideoPlayerBG.png')}
-                                    />
-                                    <Pressable
-                                        style={{
-                                            position: 'absolute',
-                                            left: SIZES.width * 0.5 - 40,
-                                            top: SIZES.height * 0.15 - 40,
-                                        }}
-                                        onPress={() => setIsPlayer(true)}
-                                    >
-                                        <RKLogo height="80" width="80" />
-                                    </Pressable>
-                                </View>
-                            )}
-
-                            <View style={{ paddingVertical: 20, paddingHorizontal: 18 }}>
-                                <Text style={{ color: '#B8C0C9', fontSize: 16 }}>Umang Gadhavana</Text>
-                                <Text style={{ color: '#404B63', fontWeight: 'bold', fontSize: 24 }}>
-                                    Socket Io Basics
-                                </Text>
-                                <Text style={{ color: '#B8C0C9', fontSize: 16 }}>Lenght: 1.5 hours</Text>
-                                <Text style={{ color: '#404B63', fontSize: 16, marginTop: 18 }}>
-                                    Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem
-                                    Ipsum has been the industry's standard dummy text ever since the 1500s, when an
-                                    unknown printer took a galley of type and scrambled it to make a type specimen book.
-                                </Text>
-                            </View>
+                            <VideoPlayerBack height="40" width="40" />
+                            <VideoPlayerLike height="40" width="40" />
                         </View>
-                    );
-                }}
-            </ScreenContainer>
+                        <Image
+                            style={{ width: SIZES.width, height: SIZES.height * 0.3 }}
+                            source={require('../../../assets/images/VideoPlayerBG.png')}
+                        />
+                        <Pressable
+                            style={{
+                                position: 'absolute',
+                                left: SIZES.width * 0.5 - 40,
+                                top: SIZES.height * 0.15 - 40,
+                            }}
+                            onPress={() => setIsPlayer(true)}
+                        >
+                            <RKLogo height="80" width="80" />
+                        </Pressable>
+                    </View>
+                )}
+
+                {!fullscreen && (
+                    <View style={{ paddingVertical: 20, paddingHorizontal: 18 }}>
+                        <Text style={{ color: '#B8C0C9', fontSize: 16 }}>Umang Gadhavana</Text>
+                        <Text style={{ color: '#404B63', fontWeight: 'bold', fontSize: 24 }}>Socket Io Basics</Text>
+                        <Text style={{ color: '#B8C0C9', fontSize: 16 }}>Lenght: 1.5 hours</Text>
+                        <Text style={{ color: '#404B63', fontSize: 16, marginTop: 18 }}>
+                            Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has
+                            been the industry's standard dummy text ever since the 1500s, when an unknown printer took a
+                            galley of type and scrambled it to make a type specimen book.
+                        </Text>
+                    </View>
+                )}
+            </View>
         </SafeAreaView>
+        // );
+        //     }}
+        // </ScreenContainer>
     );
 };
 const styles = StyleSheet.create({

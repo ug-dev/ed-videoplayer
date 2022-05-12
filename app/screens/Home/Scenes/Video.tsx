@@ -56,8 +56,8 @@ const VideoScreen: React.FC<VideoProps> = (props) => {
 
                 {!fullscreen && (
                     <View style={STYLES.lowerTextContainer}>
-                        <Text style={STYLES.primaryText}>Umang Gadhavana</Text>
-                        <Text style={STYLES.titleText}>Socket Io Basics</Text>
+                        <Text style={STYLES.primaryText}>Maths</Text>
+                        <Text style={STYLES.titleText}>Ch:1 Triangle</Text>
                         <Text style={STYLES.primaryText}>Lenght: 1.5 hours</Text>
                         <Text style={STYLES.descText}>
                             Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has

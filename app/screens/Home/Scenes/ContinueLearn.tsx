@@ -10,7 +10,10 @@ const SubjectCard = (props) => {
     const { Logo, name, backgroundColor, subjectText } = props;
 
     return (
-        <Pressable onPress={() => navigate('Video')} style={[styles.subjectCard, styles.marginV]}>
+        <Pressable
+            onPress={() => navigate('PlayerNav', { screen: 'Video' })}
+            style={[styles.subjectCard, styles.marginV]}
+        >
             <View style={[styles.logoContainer, { backgroundColor: backgroundColor }]}>
                 <Logo />
             </View>

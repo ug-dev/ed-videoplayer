@@ -11,10 +11,24 @@ import { navigateAndSimpleReset } from '@app/navigators';
 // eslint-disable-next-line @typescript-eslint/no-empty-interface
 interface SubscriptionProps {}
 
+const BOARD_DATA = [
+    { label: 'GSEB', value: 'GSEB' },
+    { label: 'CBSE', value: 'CBSE' },
+];
+
 const DATA = [
-    { label: 'Value 1', value: '1' },
-    { label: 'Value 2', value: '2' },
-    { label: 'Value 3', value: '3' },
+    { label: 'Std. 1', value: 'Std. 1' },
+    { label: 'Std. 2', value: 'Std. 2' },
+    { label: 'Std. 3', value: 'Std. 3' },
+    { label: 'Std. 4', value: 'Std. 4' },
+    { label: 'Std. 5', value: 'Std. 5' },
+    { label: 'Std. 6', value: 'Std. 6' },
+    { label: 'Std. 7', value: 'Std. 7' },
+    { label: 'Std. 8', value: 'Std. 8' },
+    { label: 'Std. 9', value: 'Std. 9' },
+    { label: 'Std. 10', value: 'Std. 10' },
+    { label: 'Std. 11', value: 'Std. 11' },
+    { label: 'Std. 12', value: 'Std. 12' },
 ];
 
 const checkBoxData = ['English', 'Maths', 'Gujarati', 'Science', 'Social Science'];
@@ -53,8 +67,8 @@ const Subscription: React.FC<SubscriptionProps> = () => {
                             placeholderStyle={STYLES.placeholderStyle}
                             selectedTextStyle={STYLES.selectedTextStyle}
                             iconStyle={STYLES.iconStyle}
-                            data={DATA}
-                            maxHeight={180}
+                            data={BOARD_DATA}
+                            maxHeight={110}
                             labelField="label"
                             valueField="value"
                             placeholder="Select Board"
@@ -89,9 +103,10 @@ const Subscription: React.FC<SubscriptionProps> = () => {
                     <View style={STYLES.marginT}>
                         <Text style={STYLES.selectText}>Select Subjects</Text>
                         <ScrollView style={STYLES.checkboxContainer}>
-                            {checkBoxData.map((item) => {
+                            {checkBoxData.map((item, index) => {
                                 return (
                                     <BouncyCheckbox
+                                        key={index}
                                         size={25}
                                         style={STYLES.checkboxStyle}
                                         fillColor="#2A368A"

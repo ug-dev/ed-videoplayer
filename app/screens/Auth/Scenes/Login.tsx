@@ -15,9 +15,9 @@ const Login: React.FC<LoginProps> = () => {
             <View style={STYLES.loginContainer}>
                 <View>
                     <AuthHeader Title="Login Here" />
-                    <Text style={STYLES.loginTopText}>
+                    {/* <Text style={STYLES.loginTopText}>
                         Get Cources of any Standard, Engineer, Etc. 1 month free, then $10/Month
-                    </Text>
+                    </Text> */}
                     <View style={STYLES.inputBoxContainer}>
                         <InputBox InputString="Email Address" />
                         <InputBox InputString="Password" />

@@ -6,6 +6,15 @@ import Search from '../../../assets/icons/search.svg';
 import SearchBar from '../Components/SearchBar';
 import styles from '../Styles/chapters.styles';
 
+const DATA = [
+    { chapter: 1, name: 'Triangle' },
+    { chapter: 2, name: 'Circle' },
+    { chapter: 3, name: 'Part-1' },
+    { chapter: 3, name: 'Part-2' },
+];
+
+const colors = ['#2A368A', '#F04F4F', '#53B715'];
+const randomeColor = () => colors[Math.floor(Math.random() * colors.length)];
 const SubjectCard = (props) => {
     const { Logo, name, backgroundColor, subjectText } = props;
 
@@ -13,7 +22,8 @@ const SubjectCard = (props) => {
         <Shadow style={styles.shadowContainer}>
             <Pressable onPress={() => navigate('Video')} style={styles.subjectCard}>
                 <View style={[styles.logoContainer, { backgroundColor: backgroundColor }]}>
-                    <Logo />
+                    {/* <Logo /> */}
+                    <Text style={{ color: '#FFF', fontSize: 23, fontWeight: '900' }}>Ch:{props.Logo}</Text>
                 </View>
                 <View style={styles.nameContainer}>
                     <Text style={styles.subjectText}>{subjectText}</Text>
@@ -51,10 +61,20 @@ const Chapters = () => {
                     </Shadow>
                 </View>
                 <ScrollView contentContainerStyle={styles.scrollContainer} style={styles.container}>
-                    <SubjectCard Logo={Search} subjectText="Maths" name="Maths" backgroundColor="#070C19" />
-                    <SubjectCard Logo={Search} subjectText="Maths" name="Science" backgroundColor="blue" />
+                    {DATA.map((item, index) => {
+                        return (
+                            <SubjectCard
+                                key={index}
+                                Logo={item.chapter}
+                                subjectText="Maths"
+                                name={item.name}
+                                backgroundColor={index >= colors.length ? colors[colors.length - index] : colors[index]}
+                            />
+                        );
+                    })}
+                    {/* <SubjectCard Logo={Search} subjectText="Maths" name="Science" backgroundColor="blue" />
                     <SubjectCard Logo={Search} subjectText="Maths" name="Science" backgroundColor="#F0DB4F" />
-                    <SubjectCard Logo={Search} subjectText="Maths" name="Science" backgroundColor="pink" />
+                    <SubjectCard Logo={Search} subjectText="Maths" name="Science" backgroundColor="pink" /> */}
                 </ScrollView>
             </View>
         </SafeAreaView>

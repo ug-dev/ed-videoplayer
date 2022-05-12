@@ -31,9 +31,9 @@ const Subject = () => {
             <SearchBar value={searchQuery} onChangeText={(value: string) => setSearchQuery(value)} />
             <View style={styles.subjectsContainer}>
                 <SubjectCard Logo={Search} name="Maths" backgroundColor="#070C19" />
-                <SubjectCard Logo={Search} name="Science" backgroundColor="blue" />
-                <SubjectCard Logo={Search} name="Science" backgroundColor="yellow" />
                 <SubjectCard Logo={Search} name="Science" backgroundColor="pink" />
+                {/* <SubjectCard Logo={Search} name="Science" backgroundColor="yellow" />
+                <SubjectCard Logo={Search} name="Science" backgroundColor="pink" /> */}
             </View>
         </View>
     );

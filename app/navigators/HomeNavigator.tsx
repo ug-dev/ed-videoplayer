@@ -40,7 +40,7 @@ export const HomeNavigator = () => {
                     alignItems: 'center',
                 },
             })}
-            initialRouteName="Home"
+            initialRouteName="Player"
         >
             <Tab.Screen
                 name="Home"

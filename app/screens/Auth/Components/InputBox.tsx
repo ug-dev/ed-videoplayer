@@ -1,12 +1,24 @@
+import { useField } from 'formik';
 import React from 'react';
-import { TextInput, View } from 'react-native';
+import { TextInput, View, Text, StyleSheet } from 'react-native';
 import STYLES from '../Styles/InputBox.style';
 
-const InputBox = ({ InputString }) => {
+const InputBox = ({ InputString, name, formikProps }) => {
+    const [field, meta, helpers] = useField(name);
+
     return (
-        <View style={STYLES.inputContainer}>
-            <TextInput placeholderTextColor={'#B8C0C9'} style={STYLES.input} placeholder={InputString} />
-        </View>
+        <>
+            <View style={STYLES.inputContainer}>
+                <TextInput
+                    onBlur={() => field.value && formikProps.validateField(name)}
+                    onChangeText={(e) => helpers.setValue(e)}
+                    placeholderTextColor={'#B8C0C9'}
+                    style={STYLES.input}
+                    placeholder={InputString}
+                />
+            </View>
+            {meta.error && <Text style={STYLES.errorText}>{meta.error}</Text>}
+        </>
     );
 };
 

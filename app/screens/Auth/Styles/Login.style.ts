@@ -10,7 +10,7 @@ export default StyleSheet.create({
         height: '100%',
     },
     loginTopText: { color: '#B8C0C9', fontSize: 16, lineHeight: 24 },
-    inputBoxContainer: { marginTop: 44 },
+    // inputBoxContainer: { marginTop: 44 },
     forgotPasswordText: {
         color: '#404B63',
         alignSelf: 'flex-end',
@@ -22,6 +22,7 @@ export default StyleSheet.create({
         fontSize: 14,
         textAlign: 'center',
         justifyContent: 'center',
+        padding: 6,
     },
     signUpText: { color: '#2A368A', fontSize: 14 },
 });

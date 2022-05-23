@@ -1,7 +1,7 @@
-import { AuthReducer } from '@app/screens/Auth/Redux/AuthReducer';
 import { combineReducers } from 'redux';
+import { authApi } from './api/auth';
 
 const reducers = combineReducers({
-    auth: AuthReducer,
+    [authApi.reducerPath]: authApi.reducer,
 });
 export default reducers;

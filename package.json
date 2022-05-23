@@ -49,6 +49,7 @@
     "react-native-background-timer": "^2.4.1",
     "react-native-bouncy-checkbox": "^2.1.10",
     "react-native-bouncy-checkbox-group": "^0.1.0",
+    "react-native-device-info": "^8.7.1",
     "react-native-dotenv": "^3.3.1",
     "react-native-element-dropdown": "^1.8.10",
     "react-native-elements": "^3.4.2",

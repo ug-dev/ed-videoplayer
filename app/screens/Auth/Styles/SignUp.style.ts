@@ -7,5 +7,5 @@ export default StyleSheet.create({
         width: '100%',
         height: '100%',
     },
-    inputContainer: { marginTop: 44 },
+    // inputContainer: { marginTop: 44 },
 });

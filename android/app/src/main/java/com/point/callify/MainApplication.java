@@ -7,6 +7,7 @@ import android.content.Context;
 import androidx.annotation.NonNull;
 import com.facebook.react.PackageList;
 import com.facebook.react.ReactApplication;
+import com.reactnativecommunity.art.ARTPackage;
 import com.oblador.vectoricons.VectorIconsPackage;
 import com.brentvatne.react.ReactVideoPackage;
 import com.cmcewen.blurview.BlurViewPackage;

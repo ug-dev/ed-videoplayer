@@ -30,6 +30,8 @@ target 'pointcallify' do
 
   pod 'RNVectorIcons', :path => '../node_modules/react-native-vector-icons'
 
+  pod 'ReactNativeART', :path => '../node_modules/@react-native-community/art'
+
   post_install do |installer|
     flipper_post_install(installer)
     react_native_post_install(installer)

@@ -5,11 +5,13 @@ import InitialReducer from './Reducers';
 
 import { createLogger } from 'redux-logger';
 import thunk from 'redux-thunk';
+import { setupListeners } from '@reduxjs/toolkit/dist/query';
+import { authApi } from './api/auth';
 
 const initialState = {};
-const loggerMiddleware = createLogger({
-    predicate: () => __DEV__,
-});
+// const loggerMiddleware = createLogger({
+//     predicate: () => __DEV__,
+// });
 type Configuration = {
     resolveCyclic: boolean;
 };
@@ -21,11 +23,17 @@ const rootStore = (state, action) => {
     }
     return InitialReducer(state, action);
 };
+
+const apiMiddleware = [authApi.middleware];
 const store = configureStore({
     reducer: rootStore,
     middleware: (getDefaultMiddleware) =>
-        getDefaultMiddleware().concat(__DEV__ ? [thunk, loggerMiddleware, ReduxFlipper(defaultConfig)] : [thunk]),
+        getDefaultMiddleware().concat(
+            __DEV__ ? [thunk, ReduxFlipper(defaultConfig), ...apiMiddleware] : [thunk, ...apiMiddleware],
+        ),
     devTools: __DEV__,
 });
+
+setupListeners(store.dispatch); // NOTE this addition
 
 export default store;

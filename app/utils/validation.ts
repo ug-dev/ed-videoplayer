@@ -1,5 +1,5 @@
-export const validation:any = {
-    string:{
+export const validation: any = {
+    string: {
         //required: "This field is required",
         matches: 'Invalid input',
         email: 'Invalid email',
@@ -8,11 +8,11 @@ export const validation:any = {
         required: 'This field is required',
         //email:'Invalid email'
     },
-    date:{
+    date: {
         //typeError:'Invalid date'
     },
-    number:{
+    number: {
         //typeError:'Invalid number',
-        min:"Value must minimum be ${min}",
-    }
+        min: 'Value must minimum be ${min}',
+    },
 };

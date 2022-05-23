@@ -1,16 +1,17 @@
 import React from 'react';
-import { Pressable, Text } from 'react-native';
+import { ActivityIndicator, Pressable, Text } from 'react-native';
 import STYLES from '../Styles/PrimaryButton.style';
 
 interface PrimaryButtonProps {
     InputText: string;
     OnPress?: () => void;
+    isLoading: boolean;
 }
 
-const PrimaryButton: React.FC<PrimaryButtonProps> = ({ InputText, OnPress }) => {
+const PrimaryButton: React.FC<PrimaryButtonProps> = ({ InputText, OnPress, isLoading }) => {
     return (
         <Pressable onPress={OnPress || null} style={STYLES.primaryButtonConatiner}>
-            <Text style={STYLES.text}>{InputText}</Text>
+            {isLoading ? <ActivityIndicator color={'#FFF'} /> : <Text style={STYLES.text}>{InputText}</Text>}
         </Pressable>
     );
 };

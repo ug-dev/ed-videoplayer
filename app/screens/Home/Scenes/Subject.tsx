@@ -44,15 +44,11 @@ const Subject = () => {
             setdataToShow(subjectData?.data);
         }
     }, [subjectData, isLoading]);
-    const isFocused = useIsFocused();
 
-    const handleSearch = (searchQuery) => {
-        if (searchQuery && searchQuery.length > 0) {
-            const newData = subjectData?.data.filter((item) =>
-                item?.name.toLowerCase().includes(searchQuery.toLowerCase()),
-            );
+    const handleSearch = (query) => {
+        if (query && query.length > 0) {
+            const newData = subjectData?.data.filter((item) => item?.name.toLowerCase().includes(query.toLowerCase()));
             setdataToShow(newData);
-            console.log(newData);
         } else {
             setdataToShow(subjectData?.data);
         }
@@ -62,9 +58,7 @@ const Subject = () => {
     const onRefresh = React.useCallback(async () => {
         setRefreshing(true);
         refetch();
-        //   getAllRecurities();
         setRefreshing(false);
-        // wait(2000).then(() => setRefreshing(false));
     }, []);
 
     return (

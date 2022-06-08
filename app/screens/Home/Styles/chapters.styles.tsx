@@ -126,4 +126,10 @@ export default StyleSheet.create({
     outer: { flex: 1, backgroundColor: 'white' },
     progressBar: { height: 6, marginTop: 6, borderRadius: 12 },
     time: { color: '#2A368A', marginTop: 4, fontSize: 14 },
+    noDataContainer: {
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
+        paddingBottom: 48,
+    },
 });

@@ -29,32 +29,54 @@ const Home: React.FC<HomeProps> = () => {
                 <View style={STYLES.container}>
                     <AuthHeader />
                     <SearchBar value={searchQuery} onChangeText={(value: string) => setSearchQuery(value)} />
-                    <View style={STYLES.bannerCardView}>
-                        {/* <FacebookPlayer
-                            style={{ borderRadius: 16, overflow: 'hidden' }}
-                            // onTimedMetadata={(e) => console.log(e)}
-                            // onEnd={(e) => {
-                            //     console.log(e);
-                            // }}
-                            mode="auto-fit"
-                            source={{
-                                uri: 'https://rk-space.sgp1.digitaloceanspaces.com/video/062%20Handling%20Different%20Routes.mp4?X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=B266WWKKK3KB2QKG6VDJ%2F20220526%2Fsgp1%2Fs3%2Faws4_request&X-Amz-Date=20220526T191908Z&X-Amz-SignedHeaders=host&X-Amz-Expires=600&X-Amz-Signature=c0c89f7dccb7508d5225e90ccfc01fc8aac4084a5efa5220a80e4a35dba74067',
-                            }}
-                            // onProgress={handleProgress}
-                            onLoad={(meta) => {
-                                // setDuration(meta.duration);
-                                // console.log({ meta });
-                            }}
-                        /> */}
-                        <Image
+                    <ScrollView
+                        pagingEnabled
+                        snapToAlignment="center"
+                        bounces={false}
+                        overScrollMode="never"
+                        scrollToOverflowEnabled={false}
+                        horizontal
+                    >
+                        <View style={STYLES.bannerCardView}>
+                            <FacebookPlayer
+                                disableFocus={true}
+                                initialPaused
+                                // fullscreenOrientation={''}
+                                // style={{ borderRadius: 16 }}
+                                // onTimedMetadata={(e) => console.log(e)}
+                                // onEnd={(e) => {
+                                //     console.log(e);
+                                // }}
+                                // mode="auto-fit"
+                                source={{
+                                    uri: 'https://stream.mux.com/Tyu80069gbkJR2uIYlz2xARq8VOl4dLg3.m3u8',
+                                }}
+                                // onProgress={handleProgress}
+                                onLoad={(meta) => {
+                                    // setDuration(meta.duration);
+                                    // console.log({ meta });
+                                }}
+                            />
+                            {/* <Image
                             style={{ borderRadius: 12 }}
                             width={SIZES.width - 32}
                             height={SIZES.height * 0.24}
                             source={{ uri: data && data?.data[0]?.media?.thumbnailUrl }}
-                        />
-                        {/* <Text style={STYLES.bannerInnerText}>Java Crash Course</Text> */}
-                    </View>
+                        /> */}
+                            {/* <Text style={STYLES.bannerInnerText}>Java Crash Course</Text> */}
+                        </View>
+                        <View style={STYLES.bannerCardView}>
+                            <Image
+                                style={{ borderRadius: 12 }}
+                                width={SIZES.width - 32}
+                                height={SIZES.height * 0.24}
+                                source={{ uri: data && data?.data[0]?.media?.thumbnailUrl }}
+                            />
+                            {/* <Text style={STYLES.bannerInnerText}>Java Crash Course</Text> */}
+                        </View>
+                    </ScrollView>
                 </View>
+
                 <View style={{ paddingHorizontal: 12 }}>
                     <PrimaryButton
                         InputText={'Subscribe Now'}

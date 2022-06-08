@@ -11,12 +11,14 @@ import Logo1 from '@app/assets/logo/logo1.svg';
 import { useGetUserMutation, useIsEmailVerifiedMutation } from '@app/services/redux/api/auth';
 import EmailVerification from '@app/screens/Auth/Scenes/EmailVerification';
 import SplashScreen from 'react-native-splash-screen';
+import { ProfileNav } from './ProfileNav';
 
 export type NavigatorParamList = {
     AuthStack: undefined;
     HomeNavigator: undefined;
     PlayerNav: undefined;
     EmailVerification: undefined;
+    ProfileNav: undefined;
 };
 
 const Stack = createNativeStackNavigator<NavigatorParamList>();
@@ -101,6 +103,7 @@ const AppStack = () => {
             <Stack.Screen name="HomeNavigator" component={HomeNavigator} />
             <Stack.Screen name="PlayerNav" component={PlayerNav} />
             <Stack.Screen name="EmailVerification" component={EmailVerification} />
+            <Stack.Screen name="ProfileNav" component={ProfileNav} />
         </Stack.Navigator>
     );
 };

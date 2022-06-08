@@ -1,5 +1,6 @@
 import ForgotPassword from '@app/screens/Auth/Scenes/ForgotPassword';
 import Login from '@app/screens/Auth/Scenes/Login';
+import PaymentSucessPage from '@app/screens/Auth/Scenes/PaymentSucessPage';
 import SignUp from '@app/screens/Auth/Scenes/SignUp';
 import Subscription from '@app/screens/Auth/Scenes/Subscription';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
@@ -10,6 +11,7 @@ export type AuthNavigatorParamList = {
     ForgotPassword: undefined;
     SignUp: undefined;
     Subscription: undefined;
+    SubscriptionSucess: undefined;
 };
 
 const Stack = createNativeStackNavigator<AuthNavigatorParamList>();
@@ -26,6 +28,7 @@ export const AuthStack = () => {
             <Stack.Screen name="SignUp" component={SignUp} />
             <Stack.Screen name="ForgotPassword" component={ForgotPassword} />
             <Stack.Screen name="Subscription" component={Subscription} />
+            <Stack.Screen name="SubscriptionSucess" component={PaymentSucessPage} />
         </Stack.Navigator>
     );
 };

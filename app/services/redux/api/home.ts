@@ -43,15 +43,14 @@ export const homeApi = createApi({
             }),
             providesTags: ['Subjects'],
         }),
-        getChapters: build.query({
-            query: (id) => ({
+        getChapters: build.mutation({
+            query: ({ subjectId, languageId }) => ({
                 url: '/mobile/getChapters',
                 params: {
-                    subjectId: id,
-                    languageId: "b7eaf2b5-c7e2-40a8-8696-6ee3b8f13a6d",
+                    subjectId,
+                    languageId,
                 },
             }),
-            providesTags: ['Chapters'],
         }),
         getMedia: build.query({
             query: (id) => ({
@@ -66,10 +65,21 @@ export const homeApi = createApi({
             }),
             providesTags: ['Banners'],
         }),
+        getLanguages: build.query({
+            query: () => ({
+                url: '/mobile/languages/list',
+            }),
+        }),
     }),
 
     reducerPath: 'home',
     // tagTypes: ['Home'],
 });
 
-export const { useGetSubcribedSubjectsQuery, useGetChaptersQuery, useGetMediaQuery, useGetBannersQuery } = homeApi;
+export const {
+    useGetSubcribedSubjectsQuery,
+    useGetChaptersMutation,
+    useGetMediaQuery,
+    useGetBannersQuery,
+    useGetLanguagesQuery,
+} = homeApi;

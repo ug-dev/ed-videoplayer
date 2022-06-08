@@ -17,6 +17,9 @@ import {
 } from '@app/services/redux/api/subscription';
 import RazorpayCheckout from 'react-native-razorpay';
 import Loading from '@app/components/Loading';
+import { useGetSubcribedSubjectsQuery } from '@app/services/redux/api/home';
+import Snackbar from 'react-native-snackbar';
+import { COLORS, FONTS } from '@app/theme';
 
 // eslint-disable-next-line @typescript-eslint/no-empty-interface
 interface SubscriptionProps {}
@@ -41,6 +44,25 @@ const Subscription: React.FC<SubscriptionProps> = () => {
         paymentSuccessHandler,
         { isLoading: isPaymentSuccessLoading, data: paymentSuccessData, error: paymentSuccess },
     ] = usePaymentSuccessHandlerMutation();
+    const {
+        data: subscribedSubjectData,
+        isLoading,
+        isSuccess,
+        isError,
+        error,
+        refetch,
+    } = useGetSubcribedSubjectsQuery();
+
+    const [subjectDataToShow, setSubjectDataToShow] = useState(subjectData);
+    const [isPrivacy, setIsPrivacy] = useState(false);
+
+    useEffect(() => {
+        console.log({ subscribedSubjectData, subjectData });
+        const subscribedSubjectIds = subscribedSubjectData?.data.map((item) => item?.subjectPlanId);
+        const subjectsToShow = subjectData?.data.filter((item) => !subscribedSubjectIds.includes(item.id));
+        setSubjectDataToShow(subjectsToShow);
+        console.log('subjectsToShow', subjectsToShow);
+    }, [subjectData, subscribedSubjectData]);
 
     useEffect(() => {
         console.log(boardData?.data);
@@ -48,6 +70,7 @@ const Subscription: React.FC<SubscriptionProps> = () => {
 
     useEffect(() => {
         if (boardValue) {
+            setSubjectDataToShow(null);
             getStandards(boardValue);
         }
     }, [boardValue]);
@@ -93,13 +116,20 @@ const Subscription: React.FC<SubscriptionProps> = () => {
         if (!isPaymentSuccessLoading && paymentSuccessData) {
             navigateAndSimpleReset('HomeNavigator');
         }
-    });
+    }, [isPaymentSuccessLoading, paymentSuccessData]);
 
     useEffect(() => {
         if (!isStandardLoading && standardsData) {
             console.log({ standardsData });
         }
-    });
+    }, [isStandardLoading, standardsData]);
+
+    useEffect(() => {
+        if (orderError) {
+            console.log({ orderError });
+            Snackbar.show({ text: orderError?.data?.message, backgroundColor: '#FFF', textColor: COLORS.angry });
+        }
+    }, [orderError]);
 
     const renderBoards = (item: any) => {
         return (
@@ -163,7 +193,7 @@ const Subscription: React.FC<SubscriptionProps> = () => {
     return (
         <SafeAreaView style={{ flex: 1, backgroundColor: '#FFF' }}>
             <View style={STYLES.container}>
-                {isBoardLoading ? (
+                {isBoardLoading || isPaymentSuccessLoading ? (
                     <Loading />
                 ) : (
                     <>
@@ -179,8 +209,8 @@ const Subscription: React.FC<SubscriptionProps> = () => {
                                     iconStyle={STYLES.iconStyle}
                                     data={boardData?.data?.map((item, index) => ({ label: item.name, value: item.id }))}
                                     maxHeight={110}
-                                    labelField="name"
-                                    valueField="id"
+                                    labelField="label"
+                                    valueField="value"
                                     placeholder="Select Board"
                                     value={boardValue}
                                     onChange={(item) => {
@@ -215,48 +245,89 @@ const Subscription: React.FC<SubscriptionProps> = () => {
                                     />
                                 </View>
                             )}
-                            {!isSubjectLoading && subjectData && (
+                            {!isSubjectLoading && subjectData && subjectDataToShow && (
                                 <View style={STYLES.marginT}>
                                     <Text style={STYLES.selectText}>Select Subjects</Text>
-                                    <ScrollView style={STYLES.checkboxContainer}>
-                                        {subjectData?.data?.map((item, index) => {
-                                            return (
-                                                <BouncyCheckbox
-                                                    // textComponent={(props) => (
-                                                    //     <View>
-                                                    //         <Text>yash</Text>
-                                                    //         <Text>Bathe</Text>
-                                                    //     </View>
-                                                    // )}
-                                                    key={index}
-                                                    size={25}
-                                                    style={STYLES.checkboxStyle}
-                                                    fillColor="#2A368A"
-                                                    unfillColor="#FFFFFF"
-                                                    textStyle={STYLES.checkBoxTextStyle}
-                                                    text={item?.name + '( ₹' + item.fees + ')'}
-                                                    iconStyle={STYLES.checkBoxIconStyle}
-                                                    onPress={(isChecked: boolean) => {
-                                                        if (isChecked) {
-                                                            handleSelectedSubject(item);
-                                                        } else {
-                                                            handleUnSelectedSubject(item);
-                                                        }
-                                                        // console.log({ isChecked });
-                                                    }}
-                                                />
-                                            );
-                                        })}
-                                    </ScrollView>
+                                    {subjectDataToShow?.length > 0 ? (
+                                        <ScrollView style={STYLES.checkboxContainer}>
+                                            {subjectDataToShow?.map((item, index) => {
+                                                return (
+                                                    <BouncyCheckbox
+                                                        // textComponent={(props) => (
+                                                        //     <View>
+                                                        //         <Text>yash</Text>
+                                                        //         <Text>Bathe</Text>
+                                                        //     </View>
+                                                        // )}
+                                                        key={index}
+                                                        size={25}
+                                                        style={STYLES.checkboxStyle}
+                                                        fillColor="#2A368A"
+                                                        unfillColor="#FFFFFF"
+                                                        textStyle={STYLES.checkBoxTextStyle}
+                                                        text={item?.name + '( ₹' + item.fees + ')'}
+                                                        iconStyle={STYLES.checkBoxIconStyle}
+                                                        onPress={(isChecked: boolean) => {
+                                                            if (isChecked) {
+                                                                handleSelectedSubject(item);
+                                                            } else {
+                                                                handleUnSelectedSubject(item);
+                                                            }
+                                                            // console.log({ isChecked });
+                                                        }}
+                                                    />
+                                                );
+                                            })}
+                                        </ScrollView>
+                                    ) : (
+                                        <View
+                                            style={
+                                                (STYLES.noDataContainer,
+                                                { justifyContent: 'flex-start', alignItems: 'center' })
+                                            }
+                                        >
+                                            <Text style={{ ...FONTS.h4, textAlign: 'center', paddingTop: 12 }}>
+                                                No Chapters Found
+                                            </Text>
+                                        </View>
+                                    )}
                                 </View>
                             )}
                         </View>
                         <View>
                             {totel > 0 && <Text style={STYLES.price}>₹ {totel}</Text>}
+                            <View style={{ width: '100%', alignItems: 'center' }}>
+                                <BouncyCheckbox
+                                    // textComponent={(props) => (
+                                    //     <View>
+                                    //         <Text>yash</Text>
+                                    //         <Text>Bathe</Text>
+                                    //     </View>
+                                    // )}
+
+                                    size={25}
+                                    style={STYLES.checkboxStyle}
+                                    fillColor="#2A368A"
+                                    unfillColor="#FFFFFF"
+                                    textStyle={STYLES.checkBoxTextStyle}
+                                    text={'Accept Privacy Policy'}
+                                    iconStyle={STYLES.checkBoxIconStyle}
+                                    onPress={(isChecked: boolean) => {
+                                        // console.log({ isChecked });
+                                        setIsPrivacy(isChecked);
+                                    }}
+                                />
+                            </View>
+
                             <Text style={STYLES.desclaimer}>
                                 Students will get unlimited access to content after taking one time suscribtion
                             </Text>
-                            <PrimaryButton isLoading={isOrderLoading} InputText="Next" OnPress={() => handleNext()} />
+                            <PrimaryButton
+                                disabled={!isPrivacy}
+                                isLoading={isOrderLoading}
+                                InputText="Next"
+                                OnPress={() => handleNext()}
+                            />
                         </View>
                     </>
                 )}

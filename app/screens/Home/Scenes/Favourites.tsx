@@ -8,7 +8,8 @@ import { FONTS } from '@app/theme';
 import { SIZES } from '@app/theme/fonts';
 import AnimatedLottieView from 'lottie-react-native';
 import React, { useEffect } from 'react';
-import { Image, SafeAreaView, ScrollView, Text, View } from 'react-native';
+import { Image, Pressable, SafeAreaView, ScrollView, Text, View } from 'react-native';
+import { Shadow } from 'react-native-neomorph-shadows';
 import styles from '../Styles/Favourite.style';
 
 // eslint-disable-next-line @typescript-eslint/no-empty-interface
@@ -27,6 +28,25 @@ const ImportantCard = ({ title }) => {
     );
 };
 
+const colors = ['#2A368A', '#F04F4F', '#53B715'];
+const SubjectCard = (props) => {
+    const { Logo, name, backgroundColor, subjectText, id } = props;
+
+    return (
+        <Shadow style={styles.shadowContainer}>
+            <Pressable onPress={() => navigate('Video', { id: id })} style={styles.subjectCard}>
+                <View style={[styles.logoContainer, { backgroundColor: backgroundColor }]}>
+                    {/* <Logo /> */}
+                    <Text style={{ color: '#FFF', fontSize: 23, fontWeight: '900' }}>Ch:{props.Logo}</Text>
+                </View>
+                <View style={styles.nameContainer}>
+                    <Text style={styles.subjectText}>{subjectText}</Text>
+                    <Text style={styles.nameText}>{name}</Text>
+                </View>
+            </Pressable>
+        </Shadow>
+    );
+};
 const Favourites: React.FC<FavouritesProps> = () => {
     const { data: favouriteData, isLoading, error } = useGetFavouritesQuery();
 
@@ -43,8 +63,13 @@ const Favourites: React.FC<FavouritesProps> = () => {
             <View style={styles.container}>
                 <AuthHeader Title="Important" />
                 <ScrollView style={styles.scrollContainer}>
-                    {favouriteData.length > 0 ? (
-                        favouriteData?.data?.map((data) => <ImportantCard title={data?.name} />)
+                    {favouriteData?.data?.length > 0 ? (
+                        favouriteData?.data?.map((data, index) => (
+                            <SubjectCard
+                                name={data?.name}
+                                backgroundColor={index >= colors.length ? colors[colors.length - index] : colors[index]}
+                            />
+                        ))
                     ) : (
                         <View style={styles.noDataContainer}>
                             <AnimatedLottieView

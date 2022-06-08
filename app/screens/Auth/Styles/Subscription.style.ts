@@ -62,4 +62,10 @@ export default StyleSheet.create({
     checkboxStyle: { marginVertical: 8 },
     checkBoxTextStyle: { textDecorationLine: 'none', color: '#404B63' },
     checkBoxIconStyle: { borderColor: '#2A368A', borderRadius: 6 },
+    noDataContainer: {
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
+        paddingBottom: 48,
+    },
 });

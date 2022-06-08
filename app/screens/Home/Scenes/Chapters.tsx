@@ -1,20 +1,14 @@
 import Loading from '@app/components/Loading';
 import { navigate } from '@app/navigators';
 import AuthHeader from '@app/screens/Auth/Components/AuthHeader';
-import { useGetChaptersQuery } from '@app/services/redux/api/home';
+import { useGetChaptersMutation, useGetChaptersQuery, useGetLanguagesQuery } from '@app/services/redux/api/home';
+import { FONTS } from '@app/theme';
 import React, { useEffect, useState } from 'react';
 import { Pressable, SafeAreaView, ScrollView, Text, View } from 'react-native';
 import { Shadow } from 'react-native-neomorph-shadows';
 import Search from '../../../assets/icons/search.svg';
 import SearchBar from '../Components/SearchBar';
 import styles from '../Styles/chapters.styles';
-
-const DATA = [
-    { chapter: 1, name: 'Triangle' },
-    { chapter: 2, name: 'Circle' },
-    { chapter: 3, name: 'Part-1' },
-    { chapter: 3, name: 'Part-2' },
-];
 
 const colors = ['#2A368A', '#F04F4F', '#53B715'];
 const randomeColor = () => colors[Math.floor(Math.random() * colors.length)];
@@ -39,14 +33,52 @@ const SubjectCard = (props) => {
 
 const Chapters = ({ route }) => {
     const [searchQuery, setSearchQuery] = useState('');
-    const [toggleSwitch, setToggleSwitch] = useState(false);
-    const { data: chaptersData, isLoading } = useGetChaptersQuery(route?.params?.id);
+    const [toggleSwitch, setToggleSwitch] = useState(true);
+    const { data: languageData, isLoading: isLanguageLoading } = useGetLanguagesQuery(null);
+    const [getChapter, { data: chaptersData, isLoading }] = useGetChaptersMutation();
+    const [dataToShow, setdataToShow] = useState(chaptersData?.data || null);
+    const [selectedLanguage, setSelectedLanguage] = useState(null);
+
+    const handleSearch = (query) => {
+        if (query && query.length > 0) {
+            const newData = chaptersData?.data.filter((item) => item?.name.toLowerCase().includes(query.toLowerCase()));
+            console.log({ newData });
+            setdataToShow(newData);
+        } else {
+            setdataToShow(chaptersData?.data);
+        }
+    };
+
+    useEffect(() => {
+        if (languageData && !isLanguageLoading) {
+            console.log({ languageData: languageData?.data });
+            const english = languageData?.data?.find((item) => item?.name.toLowerCase().includes('english'));
+            setSelectedLanguage(english?.id);
+        }
+    }, [languageData]);
+
+    useEffect(() => {
+        if (selectedLanguage) {
+            getChapter({ subjectId: route?.params?.id, languageId: selectedLanguage });
+        }
+    }, [selectedLanguage]);
 
     useEffect(() => {
         if (!isLoading && chaptersData) {
             console.log({ chaptersData });
+            setdataToShow(chaptersData?.data);
         }
-    });
+    }, [isLoading, chaptersData]);
+
+    useEffect(() => {
+        if (toggleSwitch) {
+            const english = languageData?.data?.find((item) => item?.name.toLowerCase().includes('english'));
+            setSelectedLanguage(english?.id);
+        } else {
+            const gujarati = languageData?.data?.find((item) => item?.name.toLowerCase().includes('gujarati'));
+            setSelectedLanguage(gujarati?.id);
+        }
+    }, [toggleSwitch]);
 
     console.log({ route });
 
@@ -58,7 +90,7 @@ const Chapters = ({ route }) => {
             <AuthHeader />
             <View style={styles.container}>
                 <View style={styles.searchBarContainer}>
-                    <SearchBar value={searchQuery} onChangeText={(value: string) => setSearchQuery(value)} />
+                    <SearchBar onChangeText={(value: string) => handleSearch(value)} />
                 </View>
 
                 <View style={styles.titleContainer}>
@@ -77,21 +109,31 @@ const Chapters = ({ route }) => {
                     </Shadow>
                 </View>
                 <ScrollView contentContainerStyle={styles.scrollContainer} style={styles.container}>
-                    {chaptersData?.data ? (
-                        chaptersData?.data?.map((item, index) => {
-                            return (
-                                <SubjectCard
-                                    id={item?.id}
-                                    key={item?.id}
-                                    Logo={item?.number}
-                                    subjectText={route?.params?.subjectName}
-                                    name={item?.name}
-                                    backgroundColor={
-                                        index >= colors.length ? colors[colors.length - index] : colors[index]
-                                    }
-                                />
-                            );
-                        })
+                    {dataToShow ? (
+                        dataToShow.length > 0 ? (
+                            dataToShow?.map((item, index) => {
+                                return (
+                                    <SubjectCard
+                                        id={item?.id}
+                                        key={item?.id}
+                                        Logo={item?.number}
+                                        subjectText={route?.params?.subjectName}
+                                        name={item?.name}
+                                        backgroundColor={
+                                            index >= colors.length ? colors[colors.length - index] : colors[index]
+                                        }
+                                    />
+                                );
+                            })
+                        ) : (
+                            <View
+                                style={(styles.noDataContainer, { justifyContent: 'flex-start', alignItems: 'center' })}
+                            >
+                                <Text style={{ ...FONTS.h4, textAlign: 'center', paddingTop: 12 }}>
+                                    No Chapters Found
+                                </Text>
+                            </View>
+                        )
                     ) : (
                         <Loading />
                     )}

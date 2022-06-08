@@ -6,7 +6,7 @@ import { useGetUserMutation } from '@app/services/redux/api/auth';
 import { FONTS } from '@app/theme';
 import { remove } from '@app/utils/storage';
 import React, { useEffect } from 'react';
-import { SafeAreaView, Text, TouchableOpacity, View } from 'react-native';
+import { Pressable, SafeAreaView, Text, TouchableOpacity, View } from 'react-native';
 import { Shadow } from 'react-native-neomorph-shadows';
 import Styles from '../Styles/Setting.style';
 interface SettingsProps {}
@@ -45,12 +45,15 @@ const Settings: React.FC<SettingsProps> = () => {
                     </View>
                 </Shadow>
                 <View>
-                    <View style={Styles.menuItem}>
+                    <Pressable
+                        onPress={() => navigate('ProfileNav', { screen: 'PrivacyPolicy' })}
+                        style={Styles.menuItem}
+                    >
                         <Text>Privacy Policy</Text>
-                    </View>
-                    <View style={Styles.menuItem}>
+                    </Pressable>
+                    <Pressable onPress={() => navigate('ProfileNav', { screen: 'AboutUS' })} style={Styles.menuItem}>
                         <Text>About Us</Text>
-                    </View>
+                    </Pressable>
                 </View>
                 <PrimaryButton
                     isLoading={false}

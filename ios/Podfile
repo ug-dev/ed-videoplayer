@@ -6,7 +6,7 @@ platform :ios, '12.0'
 require 'json'
 podfile_properties = JSON.parse(File.read('./Podfile.properties.json')) rescue {}
 
-target 'pointcallify' do
+target 'rkApp' do
 
  
   config = use_native_modules!
@@ -28,9 +28,13 @@ target 'pointcallify' do
 
   pod 'react-native-video', :path => '../node_modules/react-native-video'
 
-  pod 'RNVectorIcons', :path => '../node_modules/react-native-vector-icons'
+  # pod 'RNVectorIcons', :path => '../node_modules/react-native-vector-icons'
 
   pod 'ReactNativeART', :path => '../node_modules/@react-native-community/art'
+
+  pod 'RNSnackbar', :path => '../node_modules/react-native-snackbar'
+
+  pod 'react-native-splash-screen', :path => '../node_modules/react-native-splash-screen'
 
   post_install do |installer|
     flipper_post_install(installer)

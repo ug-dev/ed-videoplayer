@@ -15,4 +15,10 @@ export default StyleSheet.create({
     importantBg: { width: '100%', height: '100%', borderRadius: 12 },
     importantText: { position: 'absolute', bottom: 16, left: 16 },
     scrollContainer: { marginTop: 12 },
+    noDataContainer: {
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
+        paddingBottom: 48,
+    },
 });

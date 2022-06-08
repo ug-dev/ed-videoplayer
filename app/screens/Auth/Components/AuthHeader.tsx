@@ -3,11 +3,11 @@ import { RKLogo } from '@app/assets';
 import { Text, View } from 'react-native';
 import STYLES from '../Styles/AuthHeader.style';
 
-const AuthHeader = ({ Title }) => {
+const AuthHeader = () => {
     return (
         <View style={STYLES.authHeaderContainer}>
-            <RKLogo />
-            <Text style={STYLES.authHeaderTitle}>{Title}</Text>
+            <RKLogo width={70} height={70} />
+            {/* <Text style={STYLES.authHeaderTitle}>{Title}</Text> */}
         </View>
     );
 };

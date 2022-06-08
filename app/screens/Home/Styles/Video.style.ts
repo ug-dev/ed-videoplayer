@@ -2,7 +2,7 @@ import { SIZES } from '@app/theme/fonts';
 import { StyleSheet } from 'react-native';
 
 export default StyleSheet.create({
-    container: { flex: 1 },
+    container: { flex: 1, backgroundColor: '#FFF' },
     innerContainer: {
         flex: 1,
         backgroundColor: '#FFF',
@@ -10,19 +10,21 @@ export default StyleSheet.create({
     defaultPlayerContainer: {
         alignItems: 'center',
         justifyContent: 'center',
+        // backgroundColor: '#000',
     },
     playerContainer: {
         flex: 1,
     },
     topHeaderContainer: {
-        position: 'absolute',
+        // position: 'absolute',
         zIndex: 1,
         width: SIZES.width,
         paddingHorizontal: 18,
-        paddingTop: 16,
-        backgroundColor: 'transparent',
+        paddingVertical: 6,
+        // backgroundColor: '#000',
         flexDirection: 'row',
         justifyContent: 'space-between',
+        alignItems: 'center',
     },
     playerButton: {
         position: 'absolute',

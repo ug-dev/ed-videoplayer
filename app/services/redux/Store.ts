@@ -1,3 +1,4 @@
+import { favouriteApi } from './api/favourite';
 /* eslint-disable import/no-extraneous-dependencies */
 import { configureStore } from '@reduxjs/toolkit';
 import ReduxFlipper from 'redux-flipper';
@@ -7,6 +8,8 @@ import { createLogger } from 'redux-logger';
 import thunk from 'redux-thunk';
 import { setupListeners } from '@reduxjs/toolkit/dist/query';
 import { authApi } from './api/auth';
+import { subscriptionApi } from './api/subscription';
+import { homeApi } from './api/home';
 
 const initialState = {};
 // const loggerMiddleware = createLogger({
@@ -24,7 +27,7 @@ const rootStore = (state, action) => {
     return InitialReducer(state, action);
 };
 
-const apiMiddleware = [authApi.middleware];
+const apiMiddleware = [authApi.middleware, subscriptionApi.middleware, homeApi.middleware, favouriteApi.middleware];
 const store = configureStore({
     reducer: rootStore,
     middleware: (getDefaultMiddleware) =>

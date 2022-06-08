@@ -17,7 +17,8 @@ import NoData from './icons/noData.svg';
 import Accept from './icons/Accept.svg';
 import Reject from './icons/Reject.svg';
 import Scanner from './icons/fullscreen.svg';
-import RKLogo from './icons/rkLogo.svg';
+import RKLogo from './logo/smallLogo.svg';
+import PlayButton from './icons/rkLogo.svg';
 import JsCrash from './icons/jsCrash.svg';
 import VideoPlayerBack from './icons/VideoPlayerBack.svg';
 import VideoPlayerLike from './icons/VideoPlayerLike.svg';
@@ -52,4 +53,5 @@ export {
     JsCrash,
     ImportantCardBg,
     Safety,
+    PlayButton,
 };

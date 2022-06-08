@@ -7,8 +7,8 @@ export default StyleSheet.create({
     container: {
         flex: 1,
         backgroundColor: 'white',
-        paddingTop: 18,
-        paddingHorizontal: 18,
+        // paddingTop: 18,
+        paddingHorizontal: 16,
         // alignItems: 'center',
         // justifyContent: 'center',
     },
@@ -66,5 +66,11 @@ export default StyleSheet.create({
         width: SIZES.width - 36,
         height: (SIZES.width - 36) * 0.3,
         marginVertical: 10,
+    },
+    noDataContainer: {
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
+        paddingBottom: 48,
     },
 });

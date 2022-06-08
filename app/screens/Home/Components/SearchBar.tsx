@@ -4,7 +4,7 @@ import styles from '../Styles/SearchBar.styles';
 import Search from '../../../assets/icons/search.svg';
 
 const SearchBar = (props) => {
-    const { value, onChangeText } = props;
+    const { value, onChangeText, handleSearch } = props;
     return (
         <View style={styles.searchBar}>
             <TextInput
@@ -14,7 +14,12 @@ const SearchBar = (props) => {
                 value={value}
                 onChangeText={onChangeText}
             />
-            <Pressable style={styles.searchButton}>
+            <Pressable
+                onPress={() => {
+                    handleSearch();
+                }}
+                style={styles.searchButton}
+            >
                 <Search width={16} height={16} />
             </Pressable>
         </View>

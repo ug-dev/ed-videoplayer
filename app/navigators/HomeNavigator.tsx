@@ -6,6 +6,7 @@ import { VPFavourites, VPHome, VPPlayer, VPSettings } from '@app/screens/Home/As
 import Favourites from '@app/screens/Home/Scenes/Favourites';
 import ContinueLearn from '@app/screens/Home/Scenes/ContinueLearn';
 import Subject from '@app/screens/Home/Scenes/Subject';
+import Settings from '@app/screens/Home/Scenes/Settings';
 
 export type HomeNavigatorParamList = {
     Home: undefined;
@@ -16,6 +17,12 @@ export type HomeNavigatorParamList = {
 const Tab = createBottomTabNavigator<HomeNavigatorParamList>();
 
 export const HomeNavigator = () => {
+    const tabBarListeners = ({ navigation, route }) => ({
+        tabPress: () => {
+            return navigation.navigate(route.name);
+        },
+    });
+
     return (
         <Tab.Navigator
             screenOptions={() => ({
@@ -40,12 +47,13 @@ export const HomeNavigator = () => {
                     alignItems: 'center',
                 },
             })}
-            initialRouteName="Player"
+            initialRouteName="Home"
         >
             <Tab.Screen
                 name="Home"
                 component={Home}
                 options={{
+                    unmountOnBlur: true,
                     tabBarIcon: ({ focused }) => (
                         <VPHome style={[{ opacity: 0.6 }, focused && { opacity: 1 }]} width={26} height={26} />
                     ),
@@ -55,6 +63,7 @@ export const HomeNavigator = () => {
                 name="Player"
                 component={Subject}
                 options={{
+                    unmountOnBlur: true,
                     tabBarIcon: ({ focused }) => (
                         <VPPlayer style={[{ opacity: 0.6 }, focused && { opacity: 1 }]} width={26} height={26} />
                     ),
@@ -64,6 +73,7 @@ export const HomeNavigator = () => {
                 name="Favourites"
                 component={Favourites}
                 options={{
+                    unmountOnBlur: true,
                     tabBarIcon: ({ focused }) => (
                         <VPFavourites style={[{ opacity: 0.6 }, focused && { opacity: 1 }]} width={30} height={30} />
                     ),
@@ -71,8 +81,9 @@ export const HomeNavigator = () => {
             />
             <Tab.Screen
                 name="Settings"
-                component={ContinueLearn}
+                component={Settings}
                 options={{
+                    unmountOnBlur: true,
                     tabBarIcon: ({ focused }) => (
                         <VPSettings style={[{ opacity: 0.6 }, focused && { opacity: 1 }]} width={22} height={22} />
                     ),

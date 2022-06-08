@@ -1,41 +1,105 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Dropdown } from 'react-native-element-dropdown';
-import { SafeAreaView, View, Text, ScrollView } from 'react-native';
+import { SafeAreaView, View, Text, ScrollView, ActivityIndicator } from 'react-native';
 import AuthHeader from '../Components/AuthHeader';
 import PrimaryButton from '../Components/PrimaryButton';
 import STYLES from '../Styles/Subscription.style';
 import BouncyCheckbox from 'react-native-bouncy-checkbox';
 import { Safety } from '@app/assets';
-import { navigateAndSimpleReset } from '@app/navigators';
+import { navigate, navigateAndSimpleReset } from '@app/navigators';
+import {
+    useGetBoardsQuery,
+    useGetStandardsMutation,
+    useGetSubjectPlansMutation,
+    usePaymentFailedHandlerMutation,
+    usePaymentSuccessHandlerMutation,
+    useRequestOrderIdMutation,
+} from '@app/services/redux/api/subscription';
+import RazorpayCheckout from 'react-native-razorpay';
+import Loading from '@app/components/Loading';
 
 // eslint-disable-next-line @typescript-eslint/no-empty-interface
 interface SubscriptionProps {}
-
-const BOARD_DATA = [
-    { label: 'GSEB', value: 'GSEB' },
-    { label: 'CBSE', value: 'CBSE' },
-];
-
-const DATA = [
-    { label: 'Std. 1', value: 'Std. 1' },
-    { label: 'Std. 2', value: 'Std. 2' },
-    { label: 'Std. 3', value: 'Std. 3' },
-    { label: 'Std. 4', value: 'Std. 4' },
-    { label: 'Std. 5', value: 'Std. 5' },
-    { label: 'Std. 6', value: 'Std. 6' },
-    { label: 'Std. 7', value: 'Std. 7' },
-    { label: 'Std. 8', value: 'Std. 8' },
-    { label: 'Std. 9', value: 'Std. 9' },
-    { label: 'Std. 10', value: 'Std. 10' },
-    { label: 'Std. 11', value: 'Std. 11' },
-    { label: 'Std. 12', value: 'Std. 12' },
-];
 
 const checkBoxData = ['English', 'Maths', 'Gujarati', 'Science', 'Social Science'];
 
 const Subscription: React.FC<SubscriptionProps> = () => {
     const [boardValue, setBoardValue] = useState(null);
     const [stdValue, setStdValue] = useState(null);
+    const { data: boardData, isLoading: isBoardLoading, isError: isBoardError } = useGetBoardsQuery();
+    const [getStandards, { isLoading: isStandardLoading, data: standardsData, error: standardError }] =
+        useGetStandardsMutation();
+    const [getSubjectPlans, { isLoading: isSubjectLoading, data: subjectData, error: subjectError }] =
+        useGetSubjectPlansMutation();
+    const [requestOrderId, { isLoading: isOrderLoading, data: orderData, error: orderError }] =
+        useRequestOrderIdMutation();
+    const [
+        paymentFailedHandler,
+        { isLoading: isPaymentFailedLoading, data: paymentFailedData, error: paymentFailedError },
+    ] = usePaymentFailedHandlerMutation();
+    const [
+        paymentSuccessHandler,
+        { isLoading: isPaymentSuccessLoading, data: paymentSuccessData, error: paymentSuccess },
+    ] = usePaymentSuccessHandlerMutation();
+
+    useEffect(() => {
+        console.log(boardData?.data);
+    }, [boardData, isBoardLoading, isBoardError]);
+
+    useEffect(() => {
+        if (boardValue) {
+            getStandards(boardValue);
+        }
+    }, [boardValue]);
+
+    useEffect(() => {
+        if (stdValue) {
+            getSubjectPlans(stdValue);
+        }
+    }, [stdValue]);
+
+    useEffect(() => {
+        if (!isOrderLoading && orderData) {
+            const options = {
+                description: 'Credits towards Buying RK streaming App',
+                image: 'https://i.imgur.com/3g7nmJC.png',
+                currency: 'INR',
+                key: 'rzp_test_WuUA5MnbHJiAdL', // Your api key
+                name: 'foo',
+                prefill: {
+                    email: 'void@razorpay.com',
+                    contact: '9191919191',
+                    name: 'Razorpay Software',
+                },
+                order_id: orderData?.data?.subscription?.orderId,
+                theme: { background: '#102A8B' },
+            };
+            RazorpayCheckout.open(options)
+                .then((data) => {
+                    // handle success
+                    paymentSuccessHandler(data);
+                    alert(`Success: ${data.razorpay_payment_id}`);
+                })
+                .catch((error) => {
+                    // handle failure
+                    console.log(error);
+                    paymentFailedHandler({ order_id: orderData?.data?.subscription?.orderId });
+                    alert(`Error: ${error.code} | ${error.description}`);
+                });
+        }
+    }, [orderData]);
+
+    useEffect(() => {
+        if (!isPaymentSuccessLoading && paymentSuccessData) {
+            navigateAndSimpleReset('HomeNavigator');
+        }
+    });
+
+    useEffect(() => {
+        if (!isStandardLoading && standardsData) {
+            console.log({ standardsData });
+        }
+    });
 
     const renderBoards = (item: any) => {
         return (
@@ -54,80 +118,148 @@ const Subscription: React.FC<SubscriptionProps> = () => {
             </View>
         );
     };
+    const [selectedSubjects, setSelectedSubjects] = useState([]);
+    const [totel, setTotel] = useState(0);
 
+    const calculateTotel = () => {
+        if (selectedSubjects.length > 0) {
+            let totel = 0;
+            for (let index = 0; index < selectedSubjects?.length; index++) {
+                const element = selectedSubjects[index];
+                totel += element.fees;
+            }
+            setTotel(totel);
+            // return totel;
+        } else {
+            setTotel(0);
+        }
+    };
+
+    useEffect(() => {
+        calculateTotel();
+        console.log({ selectedSubjects });
+    }, [selectedSubjects]);
+    const handleSelectedSubject = (newSub) => {
+        const isExist = selectedSubjects.findIndex((e) => e.id === newSub.id);
+        if (isExist < 0) {
+            setSelectedSubjects([...selectedSubjects, newSub]);
+        }
+        console.log({ isExist });
+    };
+    const handleUnSelectedSubject = (sub) => {
+        const isExist = selectedSubjects.findIndex((e) => e.id === sub.id);
+        if (isExist >= 0) {
+            const newArr = selectedSubjects.filter((e) => e.id !== sub.id);
+            console.log({ newArr });
+
+            setSelectedSubjects(newArr);
+        }
+    };
+
+    const handleNext = () => {
+        const subjectPlanId = selectedSubjects.map((item) => item.id);
+        requestOrderId({ subjectPlanId: subjectPlanId });
+    };
     return (
-        <SafeAreaView>
+        <SafeAreaView style={{ flex: 1, backgroundColor: '#FFF' }}>
             <View style={STYLES.container}>
-                <View>
-                    <AuthHeader Title="Subscription" />
-                    <View style={STYLES.marginT}>
-                        <Text style={STYLES.selectText}>Select Board</Text>
-                        <Dropdown
-                            style={STYLES.dropdown}
-                            placeholderStyle={STYLES.placeholderStyle}
-                            selectedTextStyle={STYLES.selectedTextStyle}
-                            iconStyle={STYLES.iconStyle}
-                            data={BOARD_DATA}
-                            maxHeight={110}
-                            labelField="label"
-                            valueField="value"
-                            placeholder="Select Board"
-                            value={boardValue}
-                            onChange={(item) => {
-                                setBoardValue(item.value);
-                            }}
-                            renderLeftIcon={() => <Safety style={STYLES.icon} height={20} width={20} />}
-                            renderItem={renderBoards}
-                        />
-                    </View>
-                    <View style={STYLES.marginT}>
-                        <Text style={STYLES.selectText}>Select Standard</Text>
-                        <Dropdown
-                            style={STYLES.dropdown}
-                            placeholderStyle={STYLES.placeholderStyle}
-                            selectedTextStyle={STYLES.selectedTextStyle}
-                            iconStyle={STYLES.iconStyle}
-                            data={DATA}
-                            maxHeight={180}
-                            labelField="label"
-                            valueField="value"
-                            placeholder="Select Standard"
-                            value={stdValue}
-                            onChange={(item) => {
-                                setStdValue(item.value);
-                            }}
-                            renderLeftIcon={() => <Safety style={STYLES.icon} height={20} width={20} />}
-                            renderItem={renderStandards}
-                        />
-                    </View>
-                    <View style={STYLES.marginT}>
-                        <Text style={STYLES.selectText}>Select Subjects</Text>
-                        <ScrollView style={STYLES.checkboxContainer}>
-                            {checkBoxData.map((item, index) => {
-                                return (
-                                    <BouncyCheckbox
-                                        key={index}
-                                        size={25}
-                                        style={STYLES.checkboxStyle}
-                                        fillColor="#2A368A"
-                                        unfillColor="#FFFFFF"
-                                        textStyle={STYLES.checkBoxTextStyle}
-                                        text={item}
-                                        iconStyle={STYLES.checkBoxIconStyle}
-                                        onPress={(isChecked: boolean) => {}}
+                {isBoardLoading ? (
+                    <Loading />
+                ) : (
+                    <>
+                        <View>
+                            <AuthHeader Title="Subscription" />
+
+                            <View style={STYLES.marginT}>
+                                <Text style={STYLES.selectText}>Select Board</Text>
+                                <Dropdown
+                                    style={STYLES.dropdown}
+                                    placeholderStyle={STYLES.placeholderStyle}
+                                    selectedTextStyle={STYLES.selectedTextStyle}
+                                    iconStyle={STYLES.iconStyle}
+                                    data={boardData?.data?.map((item, index) => ({ label: item.name, value: item.id }))}
+                                    maxHeight={110}
+                                    labelField="name"
+                                    valueField="id"
+                                    placeholder="Select Board"
+                                    value={boardValue}
+                                    onChange={(item) => {
+                                        setBoardValue(item.value);
+                                    }}
+                                    renderLeftIcon={() => <Safety style={STYLES.icon} height={20} width={20} />}
+                                    renderItem={renderBoards}
+                                />
+                            </View>
+                            {!isStandardLoading && standardsData && (
+                                <View style={STYLES.marginT}>
+                                    <Text style={STYLES.selectText}>Select Standard</Text>
+                                    <Dropdown
+                                        style={STYLES.dropdown}
+                                        placeholderStyle={STYLES.placeholderStyle}
+                                        selectedTextStyle={STYLES.selectedTextStyle}
+                                        iconStyle={STYLES.iconStyle}
+                                        data={standardsData?.data?.map((item, index) => ({
+                                            label: item.name,
+                                            value: item.id,
+                                        }))}
+                                        maxHeight={180}
+                                        labelField="label"
+                                        valueField="value"
+                                        placeholder="Select Standard"
+                                        value={stdValue}
+                                        onChange={(item) => {
+                                            setStdValue(item.value);
+                                        }}
+                                        renderLeftIcon={() => <Safety style={STYLES.icon} height={20} width={20} />}
+                                        renderItem={renderStandards}
                                     />
-                                );
-                            })}
-                        </ScrollView>
-                    </View>
-                </View>
-                <View>
-                    <Text style={STYLES.price}>$399</Text>
-                    <Text style={STYLES.desclaimer}>
-                        Students will get unlimited access to content after taking one time suscribtion
-                    </Text>
-                    <PrimaryButton InputText="Next" OnPress={() => navigateAndSimpleReset('HomeNavigator')} />
-                </View>
+                                </View>
+                            )}
+                            {!isSubjectLoading && subjectData && (
+                                <View style={STYLES.marginT}>
+                                    <Text style={STYLES.selectText}>Select Subjects</Text>
+                                    <ScrollView style={STYLES.checkboxContainer}>
+                                        {subjectData?.data?.map((item, index) => {
+                                            return (
+                                                <BouncyCheckbox
+                                                    // textComponent={(props) => (
+                                                    //     <View>
+                                                    //         <Text>yash</Text>
+                                                    //         <Text>Bathe</Text>
+                                                    //     </View>
+                                                    // )}
+                                                    key={index}
+                                                    size={25}
+                                                    style={STYLES.checkboxStyle}
+                                                    fillColor="#2A368A"
+                                                    unfillColor="#FFFFFF"
+                                                    textStyle={STYLES.checkBoxTextStyle}
+                                                    text={item?.name + '( ₹' + item.fees + ')'}
+                                                    iconStyle={STYLES.checkBoxIconStyle}
+                                                    onPress={(isChecked: boolean) => {
+                                                        if (isChecked) {
+                                                            handleSelectedSubject(item);
+                                                        } else {
+                                                            handleUnSelectedSubject(item);
+                                                        }
+                                                        // console.log({ isChecked });
+                                                    }}
+                                                />
+                                            );
+                                        })}
+                                    </ScrollView>
+                                </View>
+                            )}
+                        </View>
+                        <View>
+                            {totel > 0 && <Text style={STYLES.price}>₹ {totel}</Text>}
+                            <Text style={STYLES.desclaimer}>
+                                Students will get unlimited access to content after taking one time suscribtion
+                            </Text>
+                            <PrimaryButton isLoading={isOrderLoading} InputText="Next" OnPress={() => handleNext()} />
+                        </View>
+                    </>
+                )}
             </View>
         </SafeAreaView>
     );

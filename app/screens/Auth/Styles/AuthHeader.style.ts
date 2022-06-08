@@ -6,7 +6,8 @@ export default StyleSheet.create({
         alignItems: 'center',
         flexDirection: 'row',
         width: '100%',
-        height: 60,
+        height: 80,
+        justifyContent: 'center',
     },
     authHeaderTitle: {
         color: '#404B63',

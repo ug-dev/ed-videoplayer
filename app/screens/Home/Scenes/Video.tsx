@@ -1,23 +1,39 @@
 import React, { useEffect, useState } from 'react';
-import { Image, Pressable, SafeAreaView, Text, View } from 'react-native';
+import { Alert, BackHandler, Image, Pressable, SafeAreaView, StatusBar, Text, View } from 'react-native';
 import { ScreenContainer } from 'react-native-video-extension';
 import { SIZES } from '@app/theme/fonts';
-import { RKLogo, VideoPlayerBack, VideoPlayerLike } from '@app/assets';
+import { PlayButton, RKLogo, VideoPlayerBack, VideoPlayerLike } from '@app/assets';
 import SystemNavigationBar from 'react-native-system-navigation-bar';
 import STYLES from '../Styles/Video.style';
 import VideoPlayer from '../Components/VideoPlayer';
+import { useGetMediaQuery } from '@app/services/redux/api/home';
+import { useFocusEffect, useIsFocused } from '@react-navigation/native';
+import { navigationRef } from '@app/navigators';
+import { useAddFavouriteMutation } from '@app/services/redux/api/favourite';
+import Loading from '@app/components/Loading';
+import LottieView from 'lottie-react-native';
 
 interface VideoProps {
     setShowTabNavigator?: () => void;
     fullscreen: boolean | string;
+    mediaId: any;
 }
 
 const VideoScreen: React.FC<VideoProps> = (props) => {
-    const { fullscreen } = props;
+    const { fullscreen, mediaId } = props;
 
-    const VIDEO_URL = 'https://stream.mux.com/Tyu80069gbkJR2uIYlz2xARq8VOl4dLg3.m3u8';
+    const { data: videoData, isLoading } = useGetMediaQuery(mediaId);
+    const [addFavourite, { data: isAddData, isLoading: isAddLoading }] = useAddFavouriteMutation();
+    const VIDEO_URL = videoData?.data?.mediaUrl || 'https://stream.mux.com/Tyu80069gbkJR2uIYlz2xARq8VOl4dLg3.m3u8';
     const [isPlayer, setIsPlayer] = useState(false);
+    const [progress, setProgress] = useState(null);
 
+    useEffect(() => {
+        if (!isLoading && videoData) {
+            console.log({ videoData });
+            console.log(videoData?.data?.thumbnailUrl);
+        }
+    }, [videoData]);
     useEffect(() => {
         if (fullscreen) {
             SystemNavigationBar.navigationHide();
@@ -26,56 +42,111 @@ const VideoScreen: React.FC<VideoProps> = (props) => {
         }
     }, [fullscreen]);
 
-    return (
-        <SafeAreaView style={STYLES.container}>
-            <View style={STYLES.innerContainer}>
-                {isPlayer ? (
-                    <View
-                        style={[
-                            !fullscreen ? { width: SIZES.width, height: SIZES.height * 0.25 } : STYLES.playerContainer,
-                            STYLES.defaultPlayerContainer,
-                        ]}
-                    >
-                        <VideoPlayer URL={VIDEO_URL} />
-                    </View>
-                ) : (
-                    <View>
-                        <View style={STYLES.topHeaderContainer}>
-                            <VideoPlayerBack height="40" width="40" />
-                            <VideoPlayerLike height="40" width="40" />
-                        </View>
-                        <Image
-                            style={{ width: SIZES.width, height: SIZES.height * 0.3 }}
-                            source={require('../../../assets/images/VideoPlayerBG.png')}
-                        />
-                        <Pressable style={STYLES.playerButton} onPress={() => setIsPlayer(true)}>
-                            <RKLogo height="80" width="80" />
-                        </Pressable>
-                    </View>
-                )}
+    const handleProgressChange = (pg) => {
+        setProgress(pg);
+    };
 
-                {!fullscreen && (
-                    <View style={STYLES.lowerTextContainer}>
-                        <Text style={STYLES.primaryText}>Maths</Text>
-                        <Text style={STYLES.titleText}>Ch:1 Triangle</Text>
-                        <Text style={STYLES.primaryText}>Lenght: 1.5 hours</Text>
-                        <Text style={STYLES.descText}>
-                            Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has
-                            been the industry's standard dummy text ever since the 1500s, when an unknown printer took a
-                            galley of type and scrambled it to make a type specimen book.
-                        </Text>
-                    </View>
-                )}
-            </View>
-        </SafeAreaView>
+    if (isLoading) {
+        return <Loading />;
+    }
+    return (
+        <>
+            <StatusBar backgroundColor={'#FFF'} barStyle={'dark-content'} />
+            <SafeAreaView style={STYLES.container}>
+                <View style={STYLES.innerContainer}>
+                    {!fullscreen && (
+                        <View style={STYLES.topHeaderContainer}>
+                            <Pressable
+                                onPress={() => {
+                                    console.log({ progress });
+
+                                    navigationRef.goBack();
+                                }}
+                            >
+                                <VideoPlayerBack height="40" width="40" />
+                            </Pressable>
+                            <Pressable
+                                onPress={() => {
+                                    addFavourite(mediaId);
+                                }}
+                            >
+                                <VideoPlayerLike height="40" width="40" />
+                            </Pressable>
+                        </View>
+                    )}
+                    {isPlayer ? (
+                        <View
+                            style={[
+                                !fullscreen
+                                    ? { width: SIZES.width, height: SIZES.height * 0.3 }
+                                    : STYLES.playerContainer,
+                                STYLES.defaultPlayerContainer,
+                            ]}
+                        >
+                            <VideoPlayer handleProgressChange={handleProgressChange} URL={VIDEO_URL} />
+                        </View>
+                    ) : (
+                        <View>
+                            <Image
+                                width={SIZES.width}
+                                height={SIZES.height * 0.3}
+                                style={{ width: SIZES.width, height: SIZES.height * 0.3 }}
+                                source={
+                                    videoData?.data?.thumbnailUrl
+                                        ? {
+                                              uri: videoData?.data?.thumbnailUrl,
+                                          }
+                                        : require('../../../assets/images/VideoPlayerBG.png')
+                                }
+                            />
+                            <Pressable style={STYLES.playerButton} onPress={() => setIsPlayer(true)}>
+                                <PlayButton height="80" width="80" />
+                            </Pressable>
+                        </View>
+                    )}
+
+                    {!fullscreen && (
+                        <View style={STYLES.lowerTextContainer}>
+                            <Text style={STYLES.primaryText}>Maths</Text>
+                            <Text style={STYLES.titleText}>{videoData?.data?.title}</Text>
+
+                            <Text style={STYLES.descText}>{videoData?.data?.description}</Text>
+                        </View>
+                    )}
+                </View>
+            </SafeAreaView>
+            {isAddLoading && (
+                <View
+                    style={{
+                        flex: 1,
+                        backgroundColor: 'rgba(0,0,0,0.9)',
+                        position: 'absolute',
+                        justifyContent: 'center',
+                        width: '100%',
+                        height: '100%',
+                        alignItems: 'center',
+                    }}
+                >
+                    <LottieView
+                        style={{ width: SIZES.width * 0.45 }}
+                        source={require('../../../assets/loading.json')}
+                        autoPlay
+                        loop
+                    />
+                    <Text>Adding to favourite</Text>
+                </View>
+            )}
+        </>
     );
 };
 
-const Video = () => {
+const Video = (props) => {
+    // console.log('hi', { hi: props?.route?.params?.id });
+
     return (
         <ScreenContainer>
             {({ fullscreen }) => {
-                return <VideoScreen fullscreen={fullscreen} />;
+                return <VideoScreen mediaId={props?.route?.params?.id} fullscreen={fullscreen} />;
             }}
         </ScreenContainer>
     );

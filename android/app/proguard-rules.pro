@@ -14,3 +14,11 @@
 -dontwarn android.support.**
 -keepclasseswithmembernames class * { native <methods>; }
 -keep public class com.horcrux.svg.** {*;}
+
+-keepattributes *Annotation*
+-dontwarn com.razorpay.**
+-keep class com.razorpay.** {*;}
+-optimizations !method/inlining/
+-keepclasseswithmembers class * {
+  public void onPayment*(...);
+}

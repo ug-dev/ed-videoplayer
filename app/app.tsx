@@ -1,8 +1,8 @@
 import React, { useEffect } from 'react';
-import { LogBox, StatusBar } from 'react-native';
+import { LogBox, Platform, StatusBar } from 'react-native';
 import { Provider } from 'react-redux';
 import DeviceInfo from 'react-native-device-info';
-
+import SplashScreen from 'react-native-splash-screen';
 import { AppNavigator, canExit, useBackButtonHandler, useNavigationPersistence } from './navigators';
 import { ErrorBoundary } from './screens/error/error-boundary';
 import store from './services/redux/Store';
@@ -31,6 +31,14 @@ function App() {
             console.log({ deviceId: androidId });
         });
     }, []);
+
+    // useEffect(() => {
+    //     setTimeout(() => {
+    //         if (Platform.OS === 'android') {
+    //             SplashScreen.hide();
+    //         }
+    //     }, 3000);
+    // }, []);
 
     // Before we show the app, we have to wait for our state to be ready.
     // In the meantime, don't render anything. This will be the background

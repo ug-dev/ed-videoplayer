@@ -8,7 +8,7 @@ export default StyleSheet.create({
         height: SIZES.height * 0.24,
         justifyContent: 'space-between',
         backgroundColor: '#070C19',
-        padding: 16,
+        // padding: 16,
         borderRadius: 12,
         marginTop: 28,
     },

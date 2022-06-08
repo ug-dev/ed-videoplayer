@@ -13,6 +13,7 @@ export default StyleSheet.create({
         paddingHorizontal: 12,
         borderWidth: 1.5,
         borderColor: '#E5E6EA',
+        height: 50,
     },
     searchBarTextInput: {
         fontSize: 14,

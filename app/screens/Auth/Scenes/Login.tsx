@@ -1,19 +1,19 @@
 import { navigate, navigateAndSimpleReset } from '@app/navigators';
 import { useLoginMutation } from '@app/services/redux/api/auth';
 import { saveString } from '@app/utils/storage';
-import React, { useEffect, useState } from 'react';
+import { validation } from '@app/utils/validation';
+import React, { useEffect } from 'react';
 import { Pressable, SafeAreaView, Text, View } from 'react-native';
+import DeviceInfo from 'react-native-device-info';
+import Snackbar from 'react-native-snackbar';
+import * as Yup from 'yup';
 import AuthHeader from '../Components/AuthHeader';
 import InputBox from '../Components/InputBox';
 import PrimaryButton from '../Components/PrimaryButton';
 import STYLES from '../Styles/Login.style';
-import DeviceInfo from 'react-native-device-info';
-import Snackbar from 'react-native-snackbar';
-import * as Yup from 'yup';
-import { validation } from '@app/utils/validation';
 
-import { Formik, FormikHelpers, FormikProps } from 'formik';
 import { ILoginFormData } from '@app/utils/Entities';
+import { Formik, FormikProps } from 'formik';
 // eslint-disable-next-line @typescript-eslint/no-empty-interface
 interface LoginProps {}
 Yup.setLocale(validation);
@@ -36,11 +36,11 @@ const Login: React.FC<LoginProps> = () => {
             const { access_token: accessToken, data: Data } = data;
             console.log(Data);
             saveString('accessToken', accessToken);
+            navigateAndSimpleReset('HomeNavigator');
         }
         if (isError) {
             console.log({ error });
-
-            Snackbar.show({ text: error?.data?.errors[0] });
+            Snackbar.show({ text: error?.data?.errors[0], backgroundColor: '#000' });
         }
     }, [isLoading, isSuccess, isError, data]);
 
@@ -49,7 +49,7 @@ const Login: React.FC<LoginProps> = () => {
         login({ email, password, device_id: deviceId });
     };
     return (
-        <SafeAreaView>
+        <SafeAreaView style={{ flex: 1, backgroundColor: '#FFF' }}>
             <View style={STYLES.loginContainer}>
                 <View>
                     <AuthHeader Title="Login Here" />
@@ -62,7 +62,7 @@ const Login: React.FC<LoginProps> = () => {
                     >
                         {(formikProps: FormikProps<ILoginFormData>) => (
                             <>
-                                <View style={STYLES.inputBoxContainer}>
+                                <View>
                                     <InputBox formikProps={formikProps} name="email" InputString="Email Address" />
                                     <InputBox formikProps={formikProps} name="password" InputString="Password" />
                                 </View>

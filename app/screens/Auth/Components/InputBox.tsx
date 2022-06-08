@@ -3,7 +3,7 @@ import React from 'react';
 import { TextInput, View, Text, StyleSheet } from 'react-native';
 import STYLES from '../Styles/InputBox.style';
 
-const InputBox = ({ InputString, name, formikProps }) => {
+const InputBox = ({ InputString, name, formikProps, ...props }) => {
     const [field, meta, helpers] = useField(name);
 
     return (
@@ -15,6 +15,7 @@ const InputBox = ({ InputString, name, formikProps }) => {
                     placeholderTextColor={'#B8C0C9'}
                     style={STYLES.input}
                     placeholder={InputString}
+                    {...props}
                 />
             </View>
             {meta.error && <Text style={STYLES.errorText}>{meta.error}</Text>}

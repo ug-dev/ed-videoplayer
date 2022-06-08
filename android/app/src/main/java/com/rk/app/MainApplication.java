@@ -1,5 +1,5 @@
-package com.point.callify;
-
+package com.rk.app;
+import com.razorpay.rn.RazorpayPackage;
   import com.facebook.react.bridge.JSIModulePackage; // <- add
   import com.swmansion.reanimated.ReanimatedJSIModulePackage; // <- add
 import android.app.Application;
@@ -7,6 +7,9 @@ import android.content.Context;
 import androidx.annotation.NonNull;
 import com.facebook.react.PackageList;
 import com.facebook.react.ReactApplication;
+import org.devio.rn.splashscreen.SplashScreenReactPackage;
+import com.azendoo.reactnativesnackbar.SnackbarPackage;
+import com.oblador.vectoricons.VectorIconsPackage;
 import com.reactnativecommunity.art.ARTPackage;
 import com.oblador.vectoricons.VectorIconsPackage;
 import com.brentvatne.react.ReactVideoPackage;
@@ -33,7 +36,9 @@ public class MainApplication extends Application implements ReactApplication {
         @SuppressWarnings("UnnecessaryLocalVariable")
         List<ReactPackage> packages = new PackageList(this).getPackages();
         // Packages that cannot be autolinked yet can be added manually here, for example:
+        // packages.add(new RazorpayPackage());
         packages.add(new BlurViewPackage());
+        // packages.add(new SplashScreenReactPackage());  //here
         return packages;
       }
 
@@ -78,7 +83,7 @@ public class MainApplication extends Application implements ReactApplication {
          We use reflection here to pick up the class that initializes Flipper,
         since Flipper library is not available in release mode
         */
-        Class<?> aClass = Class.forName("com.point.callify.ReactNativeFlipper");
+        Class<?> aClass = Class.forName("com.rk.app.ReactNativeFlipper");
         aClass
             .getMethod("initializeFlipper", Context.class, ReactInstanceManager.class)
             .invoke(null, context, reactInstanceManager);

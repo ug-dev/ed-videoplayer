@@ -28,14 +28,21 @@ const TermsAndCondition = () => {
             >
                 <Text style={{ ...FONTS.h5, marginBottom: 12 }}>Terms and Conditions</Text>
                 <Text style={FONTS.body6}>
-                    • Content of the application are subject to Copyright.{'\n'}• Clarity of video is Hd. still it is
-                    dependent on your internet service. {'\n'}• Videos are not downloadable and sharable. Screenshot and
-                    screen recording will not be allowed. {'\n'}• Once log in with one id in a particular device, same
-                    id will not work for another device. once subscribed anyhow it is not refundable. {'\n'}• Due to any
-                    reason if you want to change device then need to inform us about to change device. Once in a 12
-                    months will be allowed to change. second time anyhow change in device will not be allowed
-                    subscription time period is 12 months starting from May to April. {'\n'}• subscription will be ended
-                    in the month month of April irrespective of the date of your subscription taken.
+                    Terms and conditions
+                    {'\n'}•Content of the application are subject to Copyright.
+                    {'\n'}•Clarity of video is Hd. still it is dependent on your internet service.
+                    {'\n'}•Videos are not downloadable and sharable.
+                    {'\n'}•Screenshot and screen recording will not be allowed.
+                    {'\n'}•Once log in with one Email id in a particular device, same Email id will not work for another
+                    device.
+                    {'\n'}•once subscribed anyhow it is not refundable.
+                    {'\n'}•Due to any reason if you want to change device then need to inform us about to change device.
+                    {'\n'}•Once in a 10 months will be allowed to change. Second time anyhow change in device will not
+                    be allowed.
+                    {'\n'}•Subscription time period is 10 months starting from June to March.
+                    {'\n'}• Subscription will be ended on 31st March every year irrespective of the date of your
+                    subscription taken.
+                    {'\n'}•All the rights of application are reserved to us.
                 </Text>
             </View>
 

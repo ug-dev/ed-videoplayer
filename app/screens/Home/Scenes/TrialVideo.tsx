@@ -16,28 +16,18 @@ import LottieView from 'lottie-react-native';
 interface VideoProps {
     setShowTabNavigator?: () => void;
     fullscreen: boolean | string;
-    mediaId: any;
+    data: any;
 }
 
 const VideoScreen: React.FC<VideoProps> = (props) => {
-    const { fullscreen, mediaId } = props;
+    const { fullscreen, data: videoData } = props;
 
-    const { data: videoData, isLoading } = useGetMediaQuery(mediaId);
+    // const { data: videoData, isLoading } = useGetMediaQuery(mediaId);
     const [addFavourite, { data: isAddData, isLoading: isAddLoading }] = useAddFavouriteMutation();
-    const VIDEO_URL = videoData?.data?.mediaUrl || 'https://stream.mux.com/Tyu80069gbkJR2uIYlz2xARq8VOl4dLg3.m3u8';
+    const VIDEO_URL = videoData?.media?.mediaUrl || 'https://stream.mux.com/Tyu80069gbkJR2uIYlz2xARq8VOl4dLg3.m3u8';
     const [isPlayer, setIsPlayer] = useState(false);
     const [progress, setProgress] = useState(null);
-    const [addLastWatch, { data: isLastAddData, isLoading: isLastAddLoading }] = useAddLastWatchMutation();
 
-    useEffect(() => {
-        addLastWatch(mediaId);
-    }, []);
-    useEffect(() => {
-        if (!isLoading && videoData) {
-            console.log({ videoData });
-            console.log(videoData?.data?.thumbnailUrl);
-        }
-    }, [videoData]);
     useEffect(() => {
         if (fullscreen) {
             SystemNavigationBar.navigationHide();
@@ -65,9 +55,6 @@ const VideoScreen: React.FC<VideoProps> = (props) => {
         };
     }, [progress]);
 
-    if (isLoading) {
-        return <Loading />;
-    }
     return (
         <>
             <StatusBar backgroundColor={'#FFF'} barStyle={'dark-content'} />
@@ -84,16 +71,16 @@ const VideoScreen: React.FC<VideoProps> = (props) => {
                             >
                                 <VideoPlayerBack height="40" width="40" />
                             </Pressable>
-                            <Pressable
+                            {/* <Pressable
                                 onPress={() => {
-                                    addFavourite(mediaId);
+                                    // addFavourite(mediaId);
                                 }}
                             >
                                 <VideoPlayerLike height="40" width="40" />
-                            </Pressable>
+                            </Pressable> */}
                         </View>
                     )}
-                    {isPlayer ? (
+                    {true ? (
                         <View
                             style={[
                                 !fullscreen
@@ -102,7 +89,7 @@ const VideoScreen: React.FC<VideoProps> = (props) => {
                                 STYLES.defaultPlayerContainer,
                             ]}
                         >
-                            <VideoPlayer autoPlay={false} handleProgressChange={handleProgressChange} URL={VIDEO_URL} />
+                            <VideoPlayer autoPlay={true} handleProgressChange={handleProgressChange} URL={VIDEO_URL} />
                         </View>
                     ) : (
                         <View>
@@ -111,9 +98,9 @@ const VideoScreen: React.FC<VideoProps> = (props) => {
                                 height={SIZES.height * 0.3}
                                 style={{ width: SIZES.width, height: SIZES.height * 0.3 }}
                                 source={
-                                    videoData?.data?.thumbnailUrl
+                                    videoData?.media?.thumbnailUrl
                                         ? {
-                                              uri: videoData?.data?.thumbnailUrl,
+                                              uri: videoData?.media?.thumbnailUrl,
                                           }
                                         : require('../../../assets/images/VideoPlayerBG.png')
                                 }
@@ -127,9 +114,9 @@ const VideoScreen: React.FC<VideoProps> = (props) => {
                     {!fullscreen && (
                         <View style={STYLES.lowerTextContainer}>
                             <Text style={STYLES.primaryText}>Maths</Text>
-                            <Text style={STYLES.titleText}>{videoData?.data?.title}</Text>
+                            <Text style={STYLES.titleText}>{videoData?.media?.title}</Text>
 
-                            <Text style={STYLES.descText}>{videoData?.data?.description}</Text>
+                            <Text style={STYLES.descText}>{videoData?.media?.description}</Text>
                         </View>
                     )}
                 </View>
@@ -159,16 +146,16 @@ const VideoScreen: React.FC<VideoProps> = (props) => {
     );
 };
 
-const Video = (props) => {
+const TrialVideo = (props) => {
     console.log('hi', { hi: props?.route });
 
     return (
         <ScreenContainer>
             {({ fullscreen }) => {
-                return <VideoScreen mediaId={props?.route?.params?.id} fullscreen={fullscreen} />;
+                return <VideoScreen data={props?.route?.params?.data} fullscreen={fullscreen} />;
             }}
         </ScreenContainer>
     );
 };
 
-export default Video;
+export default TrialVideo;

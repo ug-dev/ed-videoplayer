@@ -70,6 +70,21 @@ export const homeApi = createApi({
                 url: '/mobile/languages/list',
             }),
         }),
+        addLastWatch: build.mutation({
+            query: (chapterId) => ({
+                url: 'lastWatch/createOrUpdate',
+                method: 'POST',
+                body: {
+                    chapterId: chapterId,
+                    progress: 0,
+                },
+            }),
+        }),
+        getLastWatch: build.query({
+            query: () => ({
+                url: 'lastWatch/list',
+            }),
+        }),
     }),
 
     reducerPath: 'home',
@@ -82,4 +97,6 @@ export const {
     useGetMediaQuery,
     useGetBannersQuery,
     useGetLanguagesQuery,
+    useAddLastWatchMutation,
+    useGetLastWatchQuery,
 } = homeApi;

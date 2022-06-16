@@ -7,14 +7,14 @@ import STYLES from '../Styles/Home.style';
 import AuthHeader from '@app/screens/Auth/Components/AuthHeader';
 import { navigate } from '@app/navigators';
 import PrimaryButton from '@app/screens/Auth/Components/PrimaryButton';
-import { useGetBannersQuery } from '@app/services/redux/api/home';
+import { useGetBannersQuery, useGetLastWatchQuery } from '@app/services/redux/api/home';
 import { SIZES } from '@app/theme/fonts';
 import { FacebookPlayer, FullscreenHidden, YoutubePlayer } from 'react-native-video-extension';
 import { ScreenContainer } from 'react-native-screens';
 
 // eslint-disable-next-line @typescript-eslint/no-empty-interface
 interface HomeProps {}
-const VideoBannerComponent = ({ url, thumbnailUrl }) => {
+const VideoBannerComponent = ({ url, thumbnailUrl, mediaId, data }) => {
     const [isVideo, setisVideo] = useState(false);
     return (
         <View style={STYLES.bannerCardView}>
@@ -58,7 +58,10 @@ const VideoBannerComponent = ({ url, thumbnailUrl }) => {
                                 : require('../../../assets/images/VideoPlayerBG.png')
                         }
                     />
-                    <Pressable style={STYLES.playerButton} onPress={() => setisVideo(true)}>
+                    <Pressable
+                        style={STYLES.playerButton}
+                        onPress={() => navigate('PlayerNav', { params: { data }, screen: 'TrialVideo' })}
+                    >
                         <PlayButton height="80" width="80" />
                     </Pressable>
                 </View>
@@ -69,11 +72,12 @@ const VideoBannerComponent = ({ url, thumbnailUrl }) => {
 const Home: React.FC<HomeProps> = () => {
     const [searchQuery, setSearchQuery] = useState('');
     const { data, isLoading, isError, error } = useGetBannersQuery();
+    const { data: lastWatch, isLoading: isLastWatchLoading } = useGetLastWatchQuery();
 
     useEffect(() => {
-        console.log(data);
-        console.log(data?.data[0]?.media);
-    }, [data]);
+        console.log(lastWatch?.data);
+        // console.log(data?.data[0]?.media);
+    }, [lastWatch]);
 
     return (
         <SafeAreaView style={{ flex: 1, backgroundColor: '#FFF' }}>
@@ -93,8 +97,10 @@ const Home: React.FC<HomeProps> = () => {
                             return data?.media.mediaType === 'video' ? (
                                 <VideoBannerComponent
                                     key={index}
+                                    data={data}
                                     thumbnailUrl={data && data?.media?.thumbnailUrl}
                                     url={data && data?.media?.mediaUrl}
+                                    mediaId={data && data?.mediaId}
                                 />
                             ) : (
                                 <View style={STYLES.bannerCardView}>
@@ -131,10 +137,13 @@ const Home: React.FC<HomeProps> = () => {
                     </View>
 
                     <ScrollView horizontal>
+                        {lastWatch?.data?.map((lw) => (
+                            <HomeCardView data={lw} key={lw.id} url={lw?.media.thumbnailUrl} title={lw?.media.title} />
+                        ))}
+                        {/* <HomeCardView />
                         <HomeCardView />
                         <HomeCardView />
-                        <HomeCardView />
-                        <HomeCardView />
+                        <HomeCardView /> */}
                     </ScrollView>
                 </View>
             </ScrollView>

@@ -19,7 +19,7 @@ export default StyleSheet.create({
     },
     lowerText: {
         color: '#B8C0C9',
-        fontSize: 14,
+        fontSize: 16,
         textAlign: 'center',
         justifyContent: 'center',
         padding: 6,

@@ -199,8 +199,8 @@ const SubscriptionDetail = ({ route }) => {
                 description: 'Credits towards Buying RK streaming App',
                 image: 'https://i.imgur.com/3g7nmJC.png',
                 currency: 'INR',
-                key: 'rzp_test_WuUA5MnbHJiAdL', // Your api key
-                name: 'foo',
+                key: 'rzp_test_cHJRCyN9vQsegI', // Your api key
+                name: userData?.data?.firstName,
                 prefill: {
                     email: userData?.data?.email,
                     contact: userData?.data?.phone,

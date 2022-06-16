@@ -88,10 +88,14 @@ const Login: React.FC<LoginProps> = () => {
                                 />
 
                                 <Pressable onPress={() => navigate('SignUp')}>
-                                    <Text style={STYLES.lowerText}>
-                                        Don't have any? <Text style={STYLES.signUpText}>Create One.</Text>
-                                    </Text>
+                                    <Text style={STYLES.lowerText}>Or</Text>
                                 </Pressable>
+                                <PrimaryButton
+                                    styles={{ marginTop: 0 }}
+                                    isLoading={false}
+                                    InputText={'Sign Up'}
+                                    OnPress={() => navigate('SignUp')}
+                                />
                             </>
                         )}
                     </Formik>

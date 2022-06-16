@@ -4,7 +4,7 @@ import { FacebookPlayer } from 'react-native-video-extension';
 import Video from 'react-native-video';
 import { navigationRef } from '@app/navigators';
 
-const VideoPlayer = ({ URL, handleProgressChange }) => {
+const VideoPlayer = ({ URL, handleProgressChange, autoPlay }) => {
     const [duration, setDuration] = useState(null);
     const [progress, setProgress] = useState();
     const isFocused = useIsFocused();
@@ -48,6 +48,7 @@ const VideoPlayer = ({ URL, handleProgressChange }) => {
 
     return (
         <FacebookPlayer
+            initialPaused={!autoPlay}
             ref={(ref) => {
                 console.warn({ ref });
             }}

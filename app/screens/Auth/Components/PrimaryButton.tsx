@@ -7,15 +7,16 @@ interface PrimaryButtonProps {
     OnPress?: () => void;
     isLoading: boolean;
     disabled?: boolean;
+    styles?: any;
 }
 
-const PrimaryButton: React.FC<PrimaryButtonProps> = ({ InputText, OnPress, isLoading, disabled }) => {
+const PrimaryButton: React.FC<PrimaryButtonProps> = ({ InputText, OnPress, isLoading, disabled, styles }) => {
     return (
         <Pressable
             onPress={() => {
                 if (!disabled && OnPress) OnPress();
             }}
-            style={[STYLES.primaryButtonConatiner, disabled && { backgroundColor: '#717171' }]}
+            style={[STYLES.primaryButtonConatiner, disabled && { backgroundColor: '#717171' }, { ...styles }]}
         >
             {isLoading ? <ActivityIndicator color={'#FFF'} /> : <Text style={STYLES.text}>{InputText}</Text>}
         </Pressable>

@@ -3,7 +3,7 @@ import { StyleSheet } from 'react-native';
 
 export default StyleSheet.create({
     container: {
-        width: SIZES.width * 0.5,
+        width: SIZES.width * 0.6,
         height: SIZES.width * 0.7,
         borderRadius: 24,
         shadowColor: '#000',
@@ -19,20 +19,22 @@ export default StyleSheet.create({
         marginLeft: 16,
     },
     upperImageContainer: {
-        height: SIZES.width * 0.5,
+        height: (SIZES.width * 0.6 * 9) / 16,
+        width: SIZES.width * 0.6,
         backgroundColor: '#80BD03',
         borderTopLeftRadius: 24,
         borderTopRightRadius: 24,
         justifyContent: 'center',
         alignItems: 'center',
+        overflow: 'hidden',
     },
     lowerContainer: {
-        height: SIZES.width * 0.2,
+        height: SIZES.width * 0.15,
         backgroundColor: '#FCFCFC',
         borderBottomLeftRadius: 24,
         borderBottomRightRadius: 24,
     },
-    progressBar: { height: 6 },
+    // progressBar: { height: 6 },
     textContainer: { flex: 1, justifyContent: 'center', alignItems: 'center' },
     text: { color: '#404B63', fontWeight: 'bold', fontSize: 16 },
 });

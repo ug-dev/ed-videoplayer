@@ -9,6 +9,7 @@ import Node from './node.svg';
 import CameraClose from './CameraClose.svg';
 import MicClose from './MicClose.svg';
 import ContactsIcon from './Contacts.svg';
+import Discount from './Discount.svg';
 
 export {
     ContactsIcon,
@@ -22,4 +23,5 @@ export {
     CameraClose,
     CameraDownIcon,
     Node,
+    Discount,
 };

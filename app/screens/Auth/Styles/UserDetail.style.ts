@@ -68,23 +68,4 @@ export default StyleSheet.create({
         alignItems: 'center',
         paddingBottom: 48,
     },
-    contentContainer: {
-        flex: 1,
-        alignItems: 'center',
-        // backgroundColor: 'red',
-        zIndex: 100,
-        padding: 12,
-    },
-    inputContainer: {
-        width: '100%',
-        // height: 55,
-        marginVertical: 8,
-        paddingHorizontal: 12,
-        backgroundColor: '#F6F7FB',
-        borderRadius: 8,
-    },
-    input: {
-        height: 55,
-        color: '#404B63',
-    },
 });

@@ -26,4 +26,9 @@ export default StyleSheet.create({
     firstText: { color: '#121212', fontWeight: 'bold', fontSize: 20 },
     impText: { color: '#AFAFAF', fontSize: 16 },
     viewAllContainer: { color: '#121212', textTransform: 'uppercase', fontSize: 16 },
+    playerButton: {
+        position: 'absolute',
+        left: (SIZES.width - 32) * 0.5 - 40,
+        top: SIZES.height * 0.12 - 40,
+    },
 });

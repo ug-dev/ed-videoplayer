@@ -34,7 +34,10 @@ const SubjectCard = (props) => {
 
     return (
         <Shadow style={styles.shadowContainer}>
-            <Pressable onPress={() => navigate('Video', { id: id })} style={styles.subjectCard}>
+            <Pressable
+                onPress={() => navigate('PlayerNav', { screen: 'Video', params: { id } })}
+                style={styles.subjectCard}
+            >
                 <View style={[styles.logoContainer, { backgroundColor: backgroundColor }]}>
                     {/* <Logo /> */}
                     <Text style={{ color: '#FFF', fontSize: 23, fontWeight: '900' }}>Ch:{props.Logo}</Text>
@@ -66,7 +69,11 @@ const Favourites: React.FC<FavouritesProps> = () => {
                     {favouriteData?.data?.length > 0 ? (
                         favouriteData?.data?.map((data, index) => (
                             <SubjectCard
-                                name={data?.name}
+                                key={data?.id}
+                                id={data?.chapterId}
+                                Logo={data?.chapterNumber}
+                                subjectText={data?.subjectName}
+                                name={data?.chapterName}
                                 backgroundColor={index >= colors.length ? colors[colors.length - index] : colors[index]}
                             />
                         ))

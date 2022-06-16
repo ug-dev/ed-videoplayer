@@ -6,6 +6,7 @@ import {
     NavigationState,
     NavigationAction,
     createNavigationContainerRef,
+    StackActions,
 } from '@react-navigation/native';
 
 /* eslint-disable */
@@ -159,4 +160,10 @@ export function navigateAndSimpleReset(name: string, index = 0) {
             routes: [{ name }],
         }),
     );
+}
+
+export function navigateAndReplace(name: string, params?: any) {
+    if (navigationRef.isReady()) {
+        StackActions.replace(name, params);
+    }
 }

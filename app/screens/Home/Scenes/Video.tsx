@@ -46,6 +46,21 @@ const VideoScreen: React.FC<VideoProps> = (props) => {
         setProgress(pg);
     };
 
+    useEffect(() => {
+        BackHandler.addEventListener('hardwareBackPress', () => {
+            console.log({ progress });
+            console.log('hoiiii');
+            return false;
+        });
+
+        return () => {
+            BackHandler.removeEventListener('hardwareBackPress', () => {
+                console.log({ progress });
+                return false;
+            });
+        };
+    }, [progress]);
+
     if (isLoading) {
         return <Loading />;
     }
@@ -141,7 +156,7 @@ const VideoScreen: React.FC<VideoProps> = (props) => {
 };
 
 const Video = (props) => {
-    // console.log('hi', { hi: props?.route?.params?.id });
+    console.log('hi', { hi: props?.route });
 
     return (
         <ScreenContainer>

@@ -15,9 +15,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "13B07F861A680F5B00A75B9A"
-               BuildableName = "rkApp.app"
-               BlueprintName = "rkApp"
-               ReferencedContainer = "container:rkApp.xcodeproj">
+               BuildableName = "RKLearning.app"
+               BlueprintName = "RKLearning"
+               ReferencedContainer = "container:RKLearning.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -33,9 +33,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "00E356ED1AD99517003FC87E"
-               BuildableName = "rkAppTests.xctest"
-               BlueprintName = "rkAppTests"
-               ReferencedContainer = "container:rkApp.xcodeproj">
+               BuildableName = "RKLearningTests.xctest"
+               BlueprintName = "RKLearningTests"
+               ReferencedContainer = "container:RKLearning.xcodeproj">
             </BuildableReference>
          </TestableReference>
       </Testables>
@@ -55,9 +55,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "13B07F861A680F5B00A75B9A"
-            BuildableName = "rkApp.app"
-            BlueprintName = "rkApp"
-            ReferencedContainer = "container:rkApp.xcodeproj">
+            BuildableName = "RKLearning.app"
+            BlueprintName = "RKLearning"
+            ReferencedContainer = "container:RKLearning.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </LaunchAction>
@@ -72,9 +72,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "13B07F861A680F5B00A75B9A"
-            BuildableName = "rkApp.app"
-            BlueprintName = "rkApp"
-            ReferencedContainer = "container:rkApp.xcodeproj">
+            BuildableName = "RKLearning.app"
+            BlueprintName = "RKLearning"
+            ReferencedContainer = "container:RKLearning.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </ProfileAction>

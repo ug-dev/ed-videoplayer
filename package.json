@@ -1,5 +1,5 @@
 {
-  "name": "rkApp",
+  "name": "RKLearning",
   "version": "0.0.1",
   "private": true,
   "scripts": {
@@ -7,7 +7,9 @@
     "ios": "react-native run-ios",
     "pod": "cd ios && pod install && cd ../",
     "android": "react-native run-android",
+    "android-release": "react-native run-android --variant=release",
     "android-build": "cd android && ./gradlew app:assembleRelease && cd ../",
+    "android-build-release": "cd android && ./gradlew bundleRelease && cd ../",
     "compile": "tsc --noEmit -p . --pretty",
     "format": "npm-run-all format:*",
     "format:ts": "prettier --write \"app/**/*.ts{,x}\"",
@@ -26,6 +28,8 @@
     "clean-all": "npx react-native clean-project-auto"
   },
   "dependencies": {
+    "@aws-sdk/client-s3": "^3.107.0",
+    "@gorhom/bottom-sheet": "^4",
     "@react-native-async-storage/async-storage": "^1.15.14",
     "@react-native-community/art": "^1.2.0",
     "@react-native-community/blur": "^3.6.0",
@@ -56,13 +60,14 @@
     "react-native-elements": "^3.4.2",
     "react-native-extra-dimensions-android": "^1.2.5",
     "react-native-flipper": "^0.127.0",
+    "react-native-gesture-handler": "^2.4.2",
     "react-native-image-crop-picker": "^0.37.2",
     "react-native-modal": "^13.0.1",
     "react-native-neomorph-shadows": "^1.1.2",
     "react-native-orientation": "^3.1.3",
     "react-native-paper": "^4.12.1",
     "react-native-razorpay": "^2.2.9",
-    "react-native-reanimated": "2.2.4",
+    "react-native-reanimated": "^2.8.0",
     "react-native-safe-area-context": "3.3.2",
     "react-native-screens": "^3.13.1",
     "react-native-snackbar": "^2.4.0",

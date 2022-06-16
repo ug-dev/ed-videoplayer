@@ -8,6 +8,7 @@ import { ErrorBoundary } from './screens/error/error-boundary';
 import store from './services/redux/Store';
 import './utils/ignore-warnings';
 import * as storage from './utils/storage';
+import { GestureHandlerRootView } from 'react-native-gesture-handler';
 
 export const NAVIGATION_PERSISTENCE_KEY = 'NAVIGATION_STATE';
 
@@ -51,15 +52,17 @@ function App() {
     // otherwise, we're ready to render the app
 
     return (
-        <Provider store={store}>
-            {/* <SafeAreaProvider initialMetrics={initialWindowMetrics}> */}
-            <ErrorBoundary catchErrors={'always'}>
-                {/* initialState={initialNavigationState} */}
-                <StatusBar backgroundColor={'#FFF'} barStyle={'dark-content'} />
-                <AppNavigator onStateChange={onNavigationStateChange} />
-            </ErrorBoundary>
-            {/* </SafeAreaProvider> */}
-        </Provider>
+        <GestureHandlerRootView style={{ flex: 1 }}>
+            <Provider store={store}>
+                {/* <SafeAreaProvider initialMetrics={initialWindowMetrics}> */}
+                <ErrorBoundary catchErrors={'always'}>
+                    {/* initialState={initialNavigationState} */}
+                    <StatusBar backgroundColor={'#FFF'} barStyle={'dark-content'} />
+                    <AppNavigator onStateChange={onNavigationStateChange} />
+                </ErrorBoundary>
+                {/* </SafeAreaProvider> */}
+            </Provider>
+        </GestureHandlerRootView>
     );
 }
 

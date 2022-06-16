@@ -56,6 +56,8 @@ export interface ICreateAccountFormData {
     firstName: string;
     lastName: string;
     phone: string;
+    schoolName: string;
+    deviceId: string;
 }
 
 export interface IApiResponse<T> {

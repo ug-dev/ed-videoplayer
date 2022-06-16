@@ -1,4 +1,4 @@
-import { JsCrash } from '@app/assets';
+import { JsCrash, PlayButton } from '@app/assets';
 import React, { useEffect, useState } from 'react';
 import { Image, Pressable, SafeAreaView, ScrollView, Text, TouchableHighlight, View } from 'react-native';
 import SearchBar from '../Components/SearchBar';
@@ -9,18 +9,70 @@ import { navigate } from '@app/navigators';
 import PrimaryButton from '@app/screens/Auth/Components/PrimaryButton';
 import { useGetBannersQuery } from '@app/services/redux/api/home';
 import { SIZES } from '@app/theme/fonts';
-import { FacebookPlayer } from 'react-native-video-extension';
+import { FacebookPlayer, FullscreenHidden, YoutubePlayer } from 'react-native-video-extension';
+import { ScreenContainer } from 'react-native-screens';
 
 // eslint-disable-next-line @typescript-eslint/no-empty-interface
 interface HomeProps {}
+const VideoBannerComponent = ({ url, thumbnailUrl }) => {
+    const [isVideo, setisVideo] = useState(false);
+    return (
+        <View style={STYLES.bannerCardView}>
+            {isVideo ? (
+                <FacebookPlayer
+                    // onVideoSeek={(e) => console.log(e)}
+                    // disableFocus={true}
+                    // initialPaused
+                    // fullscreenOrientation={''}
+                    // style={{ borderRadius: 16 }}
+                    onTimedMetadata={(e) => console.log(e)}
+                    // onEnd={(e) => {
+                    //     console.log(e);
+                    // }}
 
+                    // style={{ width: SIZES.width - 32 }}
+                    mode="contain"
+                    fullscreenAutorotate={false}
+                    fullscreen={false}
+                    fullscreenOrientation="landscape"
+                    source={{
+                        uri: url,
+                    }}
+                    // onProgress={handleProgress}
+                    onLoad={(meta) => {
+                        // setDuration(meta.duration);
+                        console.log({ meta });
+                    }}
+                />
+            ) : (
+                <View>
+                    <Image
+                        style={{ borderRadius: 12 }}
+                        width={SIZES.width - 32}
+                        height={SIZES.height * 0.24}
+                        source={
+                            thumbnailUrl
+                                ? {
+                                      uri: thumbnailUrl,
+                                  }
+                                : require('../../../assets/images/VideoPlayerBG.png')
+                        }
+                    />
+                    <Pressable style={STYLES.playerButton} onPress={() => setisVideo(true)}>
+                        <PlayButton height="80" width="80" />
+                    </Pressable>
+                </View>
+            )}
+        </View>
+    );
+};
 const Home: React.FC<HomeProps> = () => {
     const [searchQuery, setSearchQuery] = useState('');
     const { data, isLoading, isError, error } = useGetBannersQuery();
 
     useEffect(() => {
-        console.log({ data });
-        console.log(data?.data[0]?.media?.thumbnailUrl);
+        console.log(data);
+        console.log(data?.data[0]?.media);
     }, [data]);
 
     return (
@@ -37,43 +89,24 @@ const Home: React.FC<HomeProps> = () => {
                         scrollToOverflowEnabled={false}
                         horizontal
                     >
-                        <View style={STYLES.bannerCardView}>
-                            <FacebookPlayer
-                                disableFocus={true}
-                                initialPaused
-                                // fullscreenOrientation={''}
-                                // style={{ borderRadius: 16 }}
-                                // onTimedMetadata={(e) => console.log(e)}
-                                // onEnd={(e) => {
-                                //     console.log(e);
-                                // }}
-                                // mode="auto-fit"
-                                source={{
-                                    uri: 'https://stream.mux.com/Tyu80069gbkJR2uIYlz2xARq8VOl4dLg3.m3u8',
-                                }}
-                                // onProgress={handleProgress}
-                                onLoad={(meta) => {
-                                    // setDuration(meta.duration);
-                                    // console.log({ meta });
-                                }}
-                            />
-                            {/* <Image
-                            style={{ borderRadius: 12 }}
-                            width={SIZES.width - 32}
-                            height={SIZES.height * 0.24}
-                            source={{ uri: data && data?.data[0]?.media?.thumbnailUrl }}
-                        /> */}
-                            {/* <Text style={STYLES.bannerInnerText}>Java Crash Course</Text> */}
-                        </View>
-                        <View style={STYLES.bannerCardView}>
-                            <Image
-                                style={{ borderRadius: 12 }}
-                                width={SIZES.width - 32}
-                                height={SIZES.height * 0.24}
-                                source={{ uri: data && data?.data[0]?.media?.thumbnailUrl }}
-                            />
-                            {/* <Text style={STYLES.bannerInnerText}>Java Crash Course</Text> */}
-                        </View>
+                        {data?.data.map((data, index) => {
+                            return data?.media.mediaType === 'video' ? (
+                                <VideoBannerComponent
+                                    key={index}
+                                    thumbnailUrl={data && data?.media?.thumbnailUrl}
+                                    url={data && data?.media?.mediaUrl}
+                                />
+                            ) : (
+                                <View style={STYLES.bannerCardView}>
+                                    <Image
+                                        style={{ borderRadius: 12 }}
+                                        width={SIZES.width - 32}
+                                        height={SIZES.height * 0.24}
+                                        source={{ uri: data && data?.media?.thumbnailUrl }}
+                                    />
+                                </View>
+                            );
+                        })}
                     </ScrollView>
                 </View>
 

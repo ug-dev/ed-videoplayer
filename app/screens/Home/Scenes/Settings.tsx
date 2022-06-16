@@ -1,5 +1,5 @@
 import Loading from '@app/components/Loading';
-import { navigate } from '@app/navigators';
+import { navigate, navigateAndSimpleReset } from '@app/navigators';
 import AuthHeader from '@app/screens/Auth/Components/AuthHeader';
 import PrimaryButton from '@app/screens/Auth/Components/PrimaryButton';
 import { useGetUserMutation } from '@app/services/redux/api/auth';
@@ -51,6 +51,12 @@ const Settings: React.FC<SettingsProps> = () => {
                     >
                         <Text>Privacy Policy</Text>
                     </Pressable>
+                    <Pressable
+                        onPress={() => navigate('ProfileNav', { screen: 'TermsAndCondition' })}
+                        style={Styles.menuItem}
+                    >
+                        <Text>Terms & Conditions</Text>
+                    </Pressable>
                     <Pressable onPress={() => navigate('ProfileNav', { screen: 'AboutUS' })} style={Styles.menuItem}>
                         <Text>About Us</Text>
                     </Pressable>
@@ -60,7 +66,7 @@ const Settings: React.FC<SettingsProps> = () => {
                     InputText={'LogOut'}
                     OnPress={() => {
                         remove('accessToken');
-                        navigate('AuthStack');
+                        navigateAndSimpleReset('AuthStack');
                     }}
                 />
             </View>

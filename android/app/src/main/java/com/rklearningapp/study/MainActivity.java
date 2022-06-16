@@ -1,13 +1,16 @@
-package com.rk.app;
+package com.rklearningapp.study;
 import com.facebook.react.ReactActivity;
 import android.os.Bundle; // here
+import android.view.WindowManager;
+
 import org.devio.rn.splashscreen.SplashScreen;
 
 public class MainActivity extends ReactActivity {
   @Override
     protected void onCreate(Bundle savedInstanceState) {
       SplashScreen.show(this);
-        super.onCreate(savedInstanceState);
+      super.onCreate(savedInstanceState);
+      getWindow().setFlags(WindowManager.LayoutParams.FLAG_SECURE, WindowManager.LayoutParams.FLAG_SECURE);
     }
 
 
@@ -17,7 +20,7 @@ public class MainActivity extends ReactActivity {
    */
   @Override
   protected String getMainComponentName() {
-    return "rkApp";
+    return "RKLearning";
   }
 
   

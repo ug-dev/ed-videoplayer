@@ -3,7 +3,7 @@ import { useLoginMutation } from '@app/services/redux/api/auth';
 import { saveString } from '@app/utils/storage';
 import { validation } from '@app/utils/validation';
 import React, { useEffect } from 'react';
-import { Pressable, SafeAreaView, Text, View } from 'react-native';
+import { Keyboard, Pressable, SafeAreaView, Text, View } from 'react-native';
 import DeviceInfo from 'react-native-device-info';
 import Snackbar from 'react-native-snackbar';
 import * as Yup from 'yup';
@@ -45,12 +45,13 @@ const Login: React.FC<LoginProps> = () => {
     }, [isLoading, isSuccess, isError, data]);
 
     const handleLogin = async ({ email, password }) => {
+        Keyboard.dismiss();
         const deviceId = await DeviceInfo.getAndroidId();
         login({ email, password, device_id: deviceId });
     };
     return (
         <SafeAreaView style={{ flex: 1, backgroundColor: '#FFF' }}>
-            <View style={STYLES.loginContainer}>
+            <Pressable onPress={() => Keyboard.dismiss()} style={STYLES.loginContainer}>
                 <View>
                     <AuthHeader Title="Login Here" />
                     <Formik
@@ -63,8 +64,18 @@ const Login: React.FC<LoginProps> = () => {
                         {(formikProps: FormikProps<ILoginFormData>) => (
                             <>
                                 <View>
-                                    <InputBox formikProps={formikProps} name="email" InputString="Email Address" />
-                                    <InputBox formikProps={formikProps} name="password" InputString="Password" />
+                                    <InputBox
+                                        keyboardType="email-address"
+                                        formikProps={formikProps}
+                                        name="email"
+                                        InputString="Email Address"
+                                    />
+                                    <InputBox
+                                        secureTextEntry={true}
+                                        formikProps={formikProps}
+                                        name="password"
+                                        InputString="Password"
+                                    />
                                 </View>
                                 <Pressable onPress={() => navigate('ForgotPassword')}>
                                     <Text style={STYLES.forgotPasswordText}>Forgot Password?</Text>
@@ -85,7 +96,7 @@ const Login: React.FC<LoginProps> = () => {
                         )}
                     </Formik>
                 </View>
-            </View>
+            </Pressable>
         </SafeAreaView>
     );
 };

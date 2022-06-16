@@ -32,9 +32,7 @@ const AboutUs = () => {
                 <FieldRow label={'Contact no'} description={'7575888861'} />
                 <FieldRow
                     label={'Application Description'}
-                    description={
-                        'Hello! Welcome to the Radhe Krishna Learning This application is for school students ( CBSE & GSEB) who want to learn with innovative techniques. This application contains Videos of different subjects (chapter wise) as per their respective board syllabus. If you found this app helpful, then don’t forget to rate this app on play store/ App store! Keep learning with Radhe Krishna Learning App'
-                    }
+                    description={`Hello! Welcome to the Radhe Krishna Learning This application is for school students (CBSE & GSEB) who want to learn with innovative techniques. \nThis application contains Videos of different subjects (chapter wise) as per their respective board syllabus. \nIf you found this app helpful, then don’t forget to rate this app on play store/App store! Keep learning with Radhe Krishna Learning App`}
                 />
             </View>
         </SafeAreaView>

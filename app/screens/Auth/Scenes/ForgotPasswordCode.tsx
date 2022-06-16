@@ -7,33 +7,39 @@ import InputBox from '../Components/InputBox';
 import PrimaryButton from '../Components/PrimaryButton';
 import STYLES from '../Styles/ForgotPassword.style';
 import * as Yup from 'yup';
-import { useForgetPasswordInitMutation } from '@app/services/redux/api/auth';
+import { useForgetPasswordCodeCheckMutation, useForgetPasswordInitMutation } from '@app/services/redux/api/auth';
+import { saveString } from '@app/utils/storage';
 import Snackbar from 'react-native-snackbar';
+import { COLORS } from '@app/theme';
 // eslint-disable-next-line @typescript-eslint/no-empty-interface
 interface ForgotPasswordProps {}
-interface IForgotFormData {
-    email: string;
+interface ICodeFormData {
+    code: string;
 }
 const validationSchema = Yup.object().shape({
-    email: Yup.string().email().required().nullable(),
+    code: Yup.string().min(6).required(),
 });
-const ForgotPassword: React.FC<ForgotPasswordProps> = () => {
-    const initialValues: IForgotFormData = {
-        email: '',
+const ForgotPasswordCode: React.FC<ForgotPasswordProps> = () => {
+    const initialValues: ICodeFormData = {
+        code: '',
     };
-    const [forgotPasswordInit, { data, isLoading, isError, error }] = useForgetPasswordInitMutation();
-    const handleSubmit = ({ email }) => {
+    const [forgotPasswordCode, { data, isLoading, isError, error }] = useForgetPasswordCodeCheckMutation();
+    const handleSubmit = ({ code }) => {
         Keyboard.dismiss();
-        forgotPasswordInit(email);
+        forgotPasswordCode(code);
     };
     useEffect(() => {
-        if (data) {
-            navigate('ForgotPasswordCode');
+        if (data?.success) {
+            saveString('verifyCode', data?.code);
+            navigate('ResetPassword');
         }
         if (error) {
-            console.log('hi', { error });
-            Snackbar.show({ text: 'User not found with email', backgroundColor: '#000' });
+            Snackbar.show({
+                text: 'please enter valid verification code',
+                backgroundColor: '#000',
+            });
         }
+        console.log({ data, error });
     }, [data, error]);
     return (
         <SafeAreaView style={{ flex: 1, backgroundColor: '#FFF' }}>
@@ -47,11 +53,17 @@ const ForgotPassword: React.FC<ForgotPasswordProps> = () => {
                         initialValues={initialValues}
                         validationSchema={validationSchema}
                         validateOnChange={false}
-                        onSubmit={(e) => handleSubmit({ email: e.email })}
+                        onSubmit={(e) => handleSubmit({ code: e.code })}
                     >
-                        {(formikProps: FormikProps<IForgotFormData>) => (
+                        {(formikProps: FormikProps<ICodeFormData>) => (
                             <>
-                                <InputBox formikProps={formikProps} name="email" InputString="Email Address" />
+                                <InputBox
+                                    keyboardType="number-pad"
+                                    maxLength={6}
+                                    formikProps={formikProps}
+                                    name="code"
+                                    InputString="Verification Code"
+                                />
                                 <PrimaryButton
                                     OnPress={() => formikProps.handleSubmit()}
                                     isLoading={isLoading}
@@ -66,4 +78,4 @@ const ForgotPassword: React.FC<ForgotPasswordProps> = () => {
     );
 };
 
-export default ForgotPassword;
+export default ForgotPasswordCode;

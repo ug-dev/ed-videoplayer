@@ -7,7 +7,7 @@ import { FONTS } from '@app/theme';
 import LottieView from 'lottie-react-native';
 import { SIZES } from '@app/theme/fonts';
 import PrimaryButton from '../Components/PrimaryButton';
-import { navigateAndSimpleReset } from '@app/navigators';
+import { navigate, navigateAndSimpleReset } from '@app/navigators';
 
 const styles = StyleSheet.create({
     emailContainer: {
@@ -98,6 +98,12 @@ const EmailVerification = () => {
                     ) : (
                         <Text style={styles.text}>{'Try Again'}</Text>
                     )}
+                </Pressable>
+                <Pressable
+                    onPress={() => navigate('AuthStack', { screen: 'Login' })}
+                    style={styles.secondaryButtonConatiner}
+                >
+                    <Text style={styles.text}>{'Login as different user'}</Text>
                 </Pressable>
             </View>
         </SafeAreaView>

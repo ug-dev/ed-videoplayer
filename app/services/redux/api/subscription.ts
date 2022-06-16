@@ -63,6 +63,16 @@ export const subscriptionApi = createApi({
                 body: data,
             }),
         }),
+        getCoupneList: build.query({
+            query: () => ({
+                url: '/mobile/coupon/list',
+            }),
+        }),
+        checkCoupon: build.mutation({
+            query: (code) => ({
+                url: '/mobile/coupon/check/' + code,
+            }),
+        }),
         paymentSuccessHandler: build.mutation({
             query: (data) => ({
                 url: '/subscription/success',
@@ -79,6 +89,21 @@ export const subscriptionApi = createApi({
             }),
             invalidatesTags: ['Subjects', 'Chapters', 'Media'],
         }),
+        getState: build.query({
+            query: () => ({
+                url: 'mobile/states/list',
+            }),
+        }),
+        getCity: build.query({
+            query: () => ({
+                url: 'mobile/cities/list',
+            }),
+        }),
+        getSchool: build.query({
+            query: () => ({
+                url: 'mobile/schools/list',
+            }),
+        }),
     }),
 
     reducerPath: 'subscription',
@@ -91,4 +116,9 @@ export const {
     useRequestOrderIdMutation,
     usePaymentFailedHandlerMutation,
     usePaymentSuccessHandlerMutation,
+    useGetStateQuery,
+    useGetCityQuery,
+    useGetSchoolQuery,
+    useGetCoupneListQuery,
+    useCheckCouponMutation,
 } = subscriptionApi;

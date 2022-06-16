@@ -9,6 +9,7 @@ interface RegisterBodyInterface {
     lastName: string;
     confirmPassword: string;
     phone: string;
+    loggedInDeviceId: string;
 }
 interface LoginBodyInterface {
     email: string;
@@ -58,6 +59,7 @@ export const authApi = createApi({
             query: (registerBody: RegisterBodyInterface) => ({
                 body: {
                     ...registerBody,
+                    cityId: 'bed8781f-bb55-4577-b77d-ac9e0be83fa9',
                 },
                 method: 'POST',
                 url: '/mobile/register',
@@ -91,6 +93,33 @@ export const authApi = createApi({
                 method: 'GET',
             }),
         }),
+        forgetPasswordInit: build.mutation({
+            query: (email) => ({
+                url: 'password/email',
+                method: 'POST',
+                body: {
+                    email,
+                },
+            }),
+        }),
+        forgetPasswordCodeCheck: build.mutation({
+            query: (code) => ({
+                url: 'password/code/check',
+                method: 'POST',
+                body: {
+                    code,
+                },
+            }),
+        }),
+        resetPasswordCode: build.mutation({
+            query: (data) => ({
+                url: 'password/reset',
+                method: 'POST',
+                body: {
+                    ...data,
+                },
+            }),
+        }),
     }),
 
     reducerPath: 'auth',
@@ -103,4 +132,7 @@ export const {
     useGetUserMutation,
     useIsEmailVerifiedMutation,
     useResendEmailMutation,
+    useForgetPasswordInitMutation,
+    useForgetPasswordCodeCheckMutation,
+    useResetPasswordCodeMutation,
 } = authApi;

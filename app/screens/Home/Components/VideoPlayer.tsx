@@ -1,6 +1,6 @@
 import { useFocusEffect, useIsFocused } from '@react-navigation/native';
 import React, { useEffect, useRef, useState } from 'react';
-import { FacebookPlayer } from 'react-native-video-extension';
+import { FacebookPlayer, YoutubePlayer } from 'react-native-video-extension';
 import Video from 'react-native-video';
 import { navigationRef } from '@app/navigators';
 
@@ -47,15 +47,8 @@ const VideoPlayer = ({ URL, handleProgressChange, autoPlay }) => {
     // }, [isFocus]);
 
     return (
-        <FacebookPlayer
-            initialPaused={!autoPlay}
-            ref={(ref) => {
-                console.warn({ ref });
-            }}
-            hideShutterView={true}
-            onBuffer={(e) => {
-                console.log('buffer', e);
-            }}
+        <YoutubePlayer
+            initialPaused={false}
             onTimedMetadata={(e) => console.log(e)}
             onEnd={(e) => {
                 console.log(e);

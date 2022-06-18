@@ -4,7 +4,7 @@ import { StyleSheet } from 'react-native';
 export default StyleSheet.create({
     container: {
         width: SIZES.width * 0.6,
-        height: SIZES.width * 0.7,
+        height: (SIZES.width * 0.6 * 9) / 16 + SIZES.width * 0.15,
         borderRadius: 24,
         shadowColor: '#000',
         shadowOffset: {

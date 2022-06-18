@@ -52,10 +52,16 @@ const AppStack = () => {
         }
     };
     useEffect(() => {
+        fetchAuth();
+    }, []);
+
+    useEffect(() => {
+        console.log({ initialRoute });
+    }, [initialRoute]);
+    useEffect(() => {
         if (userData) {
             if (userData?.data.email_verified_at) {
                 console.log('hello');
-
                 setInitialRoute('HomeNavigator');
                 setIsLoading(false);
             } else {
@@ -73,10 +79,6 @@ const AppStack = () => {
             }
         }
     }, [error]);
-
-    useEffect(() => {
-        fetchAuth();
-    }, []);
 
     useEffect(() => {
         console.log('🚀🚀🚀🚀🚀 ~ file: Appnavigator.tsx ~ line 81 ~ useEffect ~ initialRoute', initialRoute);

@@ -34,9 +34,14 @@ const Login: React.FC<LoginProps> = () => {
         // console.log({ isLoading, isSuccess, isError, data });
         if (isSuccess && data) {
             const { access_token: accessToken, data: Data } = data;
-            console.log(Data);
+            console.log('hii', Data);
+
             saveString('accessToken', accessToken);
-            navigateAndSimpleReset('HomeNavigator');
+            if (Data?.email_verified_at) {
+                navigateAndSimpleReset('HomeNavigator');
+            } else {
+                navigateAndSimpleReset('EmailVerification');
+            }
         }
         if (isError) {
             console.log({ error });
@@ -53,7 +58,7 @@ const Login: React.FC<LoginProps> = () => {
         <SafeAreaView style={{ flex: 1, backgroundColor: '#FFF' }}>
             <Pressable onPress={() => Keyboard.dismiss()} style={STYLES.loginContainer}>
                 <View>
-                    <AuthHeader Title="Login Here" />
+                    <AuthHeader />
                     <Formik
                         enableReinitialize={true}
                         initialValues={initialValues}

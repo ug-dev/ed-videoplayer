@@ -4,7 +4,7 @@ import { StyleSheet } from 'react-native';
 export default StyleSheet.create({
     container: {
         width: SIZES.width * 0.6,
-        height: (SIZES.width * 0.6 * 9) / 16 + SIZES.width * 0.15,
+        height: (SIZES.width * 0.6 * 9) / 16 + SIZES.width * 0.2,
         borderRadius: 24,
         shadowColor: '#000',
         shadowOffset: {
@@ -29,10 +29,11 @@ export default StyleSheet.create({
         overflow: 'hidden',
     },
     lowerContainer: {
-        height: SIZES.width * 0.15,
+        height: SIZES.width * 0.2,
         backgroundColor: '#FCFCFC',
         borderBottomLeftRadius: 24,
         borderBottomRightRadius: 24,
+        padding: 12,
     },
     // progressBar: { height: 6 },
     textContainer: { flex: 1, justifyContent: 'center', alignItems: 'center' },

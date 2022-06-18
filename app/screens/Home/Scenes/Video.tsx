@@ -17,10 +17,11 @@ interface VideoProps {
     setShowTabNavigator?: () => void;
     fullscreen: boolean | string;
     mediaId: any;
+    subjectText: any;
 }
 
 const VideoScreen: React.FC<VideoProps> = (props) => {
-    const { fullscreen, mediaId } = props;
+    const { fullscreen, mediaId, subjectText } = props;
 
     const { data: videoData, isLoading } = useGetMediaQuery(mediaId);
     const [addFavourite, { data: isAddData, isLoading: isAddLoading }] = useAddFavouriteMutation();
@@ -126,7 +127,7 @@ const VideoScreen: React.FC<VideoProps> = (props) => {
 
                     {!fullscreen && (
                         <View style={STYLES.lowerTextContainer}>
-                            <Text style={STYLES.primaryText}>Maths</Text>
+                            <Text style={STYLES.primaryText}>{subjectText}</Text>
                             <Text style={STYLES.titleText}>{videoData?.data?.title}</Text>
 
                             <Text style={STYLES.descText}>{videoData?.data?.description}</Text>
@@ -165,7 +166,13 @@ const Video = (props) => {
     return (
         <ScreenContainer>
             {({ fullscreen }) => {
-                return <VideoScreen mediaId={props?.route?.params?.id} fullscreen={fullscreen} />;
+                return (
+                    <VideoScreen
+                        mediaId={props?.route?.params?.id}
+                        subjectText={props?.route?.params?.subjectText}
+                        fullscreen={fullscreen}
+                    />
+                );
             }}
         </ScreenContainer>
     );

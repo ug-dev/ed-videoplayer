@@ -131,9 +131,9 @@ const Home: React.FC<HomeProps> = () => {
                 <View style={STYLES.bottomSection}>
                     <View style={STYLES.textContainer}>
                         <Text style={STYLES.firstText}>Last watched</Text>
-                        <Pressable onPress={() => navigate('PlayerNav', { screen: 'ContinueLearn' })}>
+                        {/* <Pressable onPress={() => navigate('PlayerNav', { screen: 'ContinueLearn' })}>
                             <Text style={STYLES.viewAllContainer}>View All</Text>
-                        </Pressable>
+                        </Pressable> */}
                     </View>
 
                     <ScrollView horizontal>

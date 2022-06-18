@@ -16,7 +16,7 @@ import { SIZES } from '@app/theme/fonts';
 import Snackbar from 'react-native-snackbar';
 import PrimaryButton from '../Components/PrimaryButton';
 import RazorpayCheckout from 'react-native-razorpay';
-import { navigateAndReplace, navigateAndSimpleReset } from '@app/navigators';
+import { navigate, navigateAndReplace, navigateAndSimpleReset } from '@app/navigators';
 import { useGetUserMutation } from '@app/services/redux/api/auth';
 import Loading from '@app/components/Loading';
 import BouncyCheckbox from 'react-native-bouncy-checkbox';
@@ -195,33 +195,35 @@ const SubscriptionDetail = ({ route }) => {
     useEffect(() => {
         if (!isOrderLoading && orderData) {
             toggleModel();
-            const options = {
-                description: 'Credits towards Buying RK streaming App',
-                image: 'https://i.imgur.com/3g7nmJC.png',
-                currency: 'INR',
-                key: 'rzp_test_cHJRCyN9vQsegI', // Your api key
-                name: userData?.data?.firstName,
-                prefill: {
-                    email: userData?.data?.email,
-                    contact: userData?.data?.phone,
-                    name: userData?.data?.firstName + ' ' + userData?.data?.lastName,
-                },
-                order_id: orderData?.data?.subscription?.orderId,
-                theme: { background: '#102A8B' },
-            };
-            RazorpayCheckout.open(options)
-                .then((data) => {
-                    // handle success
+            navigate('AuthStack', { screen: 'RequestGenerated' });
 
-                    paymentSuccessHandler(data);
-                    // alert(`Success: ${data.razorpay_payment_id}`);
-                })
-                .catch((error) => {
-                    // handle failure
-                    console.log(error);
-                    paymentFailedHandler({ order_id: orderData?.data?.subscription?.orderId });
-                    alert(`${error.description}`);
-                });
+            // const options = {
+            //     description: 'Credits towards Buying RK streaming App',
+            //     image: 'https://i.imgur.com/3g7nmJC.png',
+            //     currency: 'INR',
+            //     key: 'rzp_test_cHJRCyN9vQsegI', // Your api key
+            //     name: userData?.data?.firstName,
+            //     prefill: {
+            //         email: userData?.data?.email,
+            //         contact: userData?.data?.phone,
+            //         name: userData?.data?.firstName + ' ' + userData?.data?.lastName,
+            //     },
+            //     order_id: orderData?.data?.subscription?.orderId,
+            //     theme: { background: '#102A8B' },
+            // };
+            // RazorpayCheckout.open(options)
+            //     .then((data) => {
+            //         // handle success
+
+            //         paymentSuccessHandler(data);
+            //         // alert(`Success: ${data.razorpay_payment_id}`);
+            //     })
+            //     .catch((error) => {
+            //         // handle failure
+            //         console.log(error);
+            //         paymentFailedHandler({ order_id: orderData?.data?.subscription?.orderId });
+            //         alert(`${error.description}`);
+            //     });
         }
     }, [orderData]);
 

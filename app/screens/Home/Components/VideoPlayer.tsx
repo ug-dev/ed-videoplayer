@@ -52,6 +52,10 @@ const VideoPlayer = ({ URL, handleProgressChange, autoPlay }) => {
             ref={(ref) => {
                 console.warn({ ref });
             }}
+            hideShutterView={true}
+            onBuffer={(e) => {
+                console.log('buffer', e);
+            }}
             onTimedMetadata={(e) => console.log(e)}
             onEnd={(e) => {
                 console.log(e);

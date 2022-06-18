@@ -17,7 +17,7 @@ const SubjectCard = (props) => {
 
     return (
         <Shadow style={styles.shadowContainer}>
-            <Pressable onPress={() => navigate('Video', { id: id })} style={styles.subjectCard}>
+            <Pressable onPress={() => navigate('Video', { id: id, subjectText })} style={styles.subjectCard}>
                 <View style={[styles.logoContainer, { backgroundColor: backgroundColor }]}>
                     {/* <Logo /> */}
                     <Text style={{ color: '#FFF', fontSize: 23, fontWeight: '900' }}>Ch:{props.Logo}</Text>
@@ -120,7 +120,7 @@ const Chapters = ({ route }) => {
                                         subjectText={route?.params?.subjectName}
                                         name={item?.name}
                                         backgroundColor={
-                                            index >= colors.length ? colors[colors.length - index] : colors[index]
+                                            index >= colors.length ? colors[index - colors.length] : colors[index]
                                         }
                                     />
                                 );

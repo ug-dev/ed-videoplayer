@@ -2,6 +2,7 @@ import ForgotPassword from '@app/screens/Auth/Scenes/ForgotPassword';
 import ForgotPasswordCode from '@app/screens/Auth/Scenes/ForgotPasswordCode';
 import Login from '@app/screens/Auth/Scenes/Login';
 import PaymentSucessPage from '@app/screens/Auth/Scenes/PaymentSucessPage';
+import RequestGenerated from '@app/screens/Auth/Scenes/RequestGenerated';
 import ResetPassword from '@app/screens/Auth/Scenes/ResetPassword';
 import SignUp from '@app/screens/Auth/Scenes/SignUp';
 import Subscription from '@app/screens/Auth/Scenes/Subscription';
@@ -20,6 +21,7 @@ export type AuthNavigatorParamList = {
     ResetPassword: undefined;
     UserDetail: undefined;
     SubscriptionDetail: undefined;
+    RequestGenerated: undefined;
 };
 
 const Stack = createNativeStackNavigator<AuthNavigatorParamList>();
@@ -41,8 +43,9 @@ export const AuthStack = () => {
 
             <Stack.Screen name="Subscription" component={Subscription} />
             <Stack.Screen name="SubscriptionDetail" component={SubscriptionDetail} />
-
             <Stack.Screen name="SubscriptionSucess" component={PaymentSucessPage} />
+
+            <Stack.Screen name="RequestGenerated" component={RequestGenerated} />
         </Stack.Navigator>
     );
 };

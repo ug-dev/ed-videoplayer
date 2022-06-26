@@ -127,25 +127,27 @@ const Home: React.FC<HomeProps> = () => {
                         Subscribe Now
                     </PrimaryButton>
                 </View>
-
-                <View style={STYLES.bottomSection}>
-                    <View style={STYLES.textContainer}>
-                        <Text style={STYLES.firstText}>Last watched</Text>
-                        {/* <Pressable onPress={() => navigate('PlayerNav', { screen: 'ContinueLearn' })}>
+                {lastWatch?.data && lastWatch?.data.length > 0 && (
+                    <View style={STYLES.bottomSection}>
+                        <View style={STYLES.textContainer}>
+                            <Text style={STYLES.firstText}>Last watched</Text>
+                            {/* <Pressable onPress={() => navigate('PlayerNav', { screen: 'ContinueLearn' })}>
                             <Text style={STYLES.viewAllContainer}>View All</Text>
                         </Pressable> */}
-                    </View>
+                        </View>
 
-                    <ScrollView horizontal>
-                        {lastWatch?.data?.map((lw) => (
-                            <HomeCardView data={lw} key={lw.id} url={lw?.media.thumbnailUrl} title={lw?.media.title} />
-                        ))}
-                        {/* <HomeCardView />
-                        <HomeCardView />
-                        <HomeCardView />
-                        <HomeCardView /> */}
-                    </ScrollView>
-                </View>
+                        <ScrollView horizontal>
+                            {lastWatch?.data?.map((lw) => (
+                                <HomeCardView
+                                    data={lw}
+                                    key={lw.id}
+                                    url={lw?.media.thumbnailUrl}
+                                    title={lw?.media.title}
+                                />
+                            ))}
+                        </ScrollView>
+                    </View>
+                )}
             </ScrollView>
         </SafeAreaView>
     );

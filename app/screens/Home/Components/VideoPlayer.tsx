@@ -48,6 +48,16 @@ const VideoPlayer = ({ URL, handleProgressChange, autoPlay }) => {
 
     return (
         <YoutubePlayer
+            onBuffer={(a, b) => {
+                console.log({ a, b });
+            }}
+            bufferConfig={{
+                minBufferMs: 1000,
+                maxBufferMs: 5000,
+                bufferForPlaybackMs: 1000,
+                bufferForPlaybackAfterRebufferMs: 5000,
+            }}
+            allowsExternalPlayback={false}
             initialPaused={false}
             onTimedMetadata={(e) => console.log(e)}
             onEnd={(e) => {

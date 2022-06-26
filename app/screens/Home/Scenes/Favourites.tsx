@@ -29,6 +29,7 @@ const ImportantCard = ({ title }) => {
 };
 
 const colors = ['#2A368A', '#F04F4F', '#53B715'];
+
 const SubjectCard = (props) => {
     const { Logo, name, backgroundColor, subjectText, id } = props;
 
@@ -50,12 +51,16 @@ const SubjectCard = (props) => {
         </Shadow>
     );
 };
+
 const Favourites: React.FC<FavouritesProps> = () => {
-    const { data: favouriteData, isLoading, error } = useGetFavouritesQuery();
+    const { data: favouriteData, isLoading, error, refetch } = useGetFavouritesQuery();
 
     useEffect(() => {
         console.log({ favouriteData });
     }, [favouriteData]);
+    useEffect(() => {
+        refetch();
+    }, []);
 
     if (isLoading) {
         return <Loading />;
@@ -64,7 +69,7 @@ const Favourites: React.FC<FavouritesProps> = () => {
     return (
         <SafeAreaView style={{ flex: 1, backgroundColor: '#FFF' }}>
             <View style={styles.container}>
-                <AuthHeader Title="Important" />
+                <AuthHeader />
                 <ScrollView style={styles.scrollContainer}>
                     {favouriteData?.data?.length > 0 ? (
                         favouriteData?.data?.map((data, index) => (

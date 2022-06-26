@@ -113,7 +113,7 @@ const VideoScreen: React.FC<VideoProps> = (props) => {
 
                     {!fullscreen && (
                         <View style={STYLES.lowerTextContainer}>
-                            <Text style={STYLES.primaryText}>Maths</Text>
+                            {/* <Text style={STYLES.primaryText}>Maths</Text> */}
                             <Text style={STYLES.titleText}>{videoData?.media?.title}</Text>
 
                             <Text style={STYLES.descText}>{videoData?.media?.description}</Text>

@@ -94,7 +94,7 @@ const Chapters = ({ route }) => {
                 </View>
 
                 <View style={styles.titleContainer}>
-                    <Text style={styles.titleText}>Maths</Text>
+                    <Text style={styles.titleText}>{route?.params?.subjectName}</Text>
                     <Shadow style={styles.navShadowContainer}>
                         <Pressable onPress={() => setToggleSwitch(!toggleSwitch)}>
                             <View style={styles.languagesContainer}>
@@ -119,9 +119,7 @@ const Chapters = ({ route }) => {
                                         Logo={item?.number}
                                         subjectText={route?.params?.subjectName}
                                         name={item?.name}
-                                        backgroundColor={
-                                            index >= colors.length ? colors[index - colors.length] : colors[index]
-                                        }
+                                        backgroundColor={colors[index % colors.length]}
                                     />
                                 );
                             })

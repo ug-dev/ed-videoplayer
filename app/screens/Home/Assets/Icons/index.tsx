@@ -1,5 +1,5 @@
 import VPHome from './home.svg';
-import VPFavourites from './favourites.svg';
+import VPFavourites from './VideoPlayerLike.svg';
 import VPPlayer from './player.svg';
 import VPSettings from './settings.svg';
 

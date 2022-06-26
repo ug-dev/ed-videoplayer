@@ -29,6 +29,8 @@ const validationSchema = Yup.object().shape({
     password: Yup.string().required().nullable().trim(),
     confirmPassword: Yup.string().required().nullable().trim(),
     schoolName: Yup.string().required().nullable(),
+    cityName: Yup.string().required().nullable().trim(),
+    referral: Yup.string(),
 });
 
 const initialValues: ICreateAccountFormData = {
@@ -39,6 +41,8 @@ const initialValues: ICreateAccountFormData = {
     lastName: '',
     phone: '',
     schoolName: '',
+    cityName: '',
+    referral: '',
 };
 
 const SignUp: React.FC<SignUpProps> = () => {
@@ -60,7 +64,6 @@ const SignUp: React.FC<SignUpProps> = () => {
         }
         if (isError) {
             console.log({ error });
-
             Snackbar.show({ text: error?.data?.errors[0] });
         }
     }, [isLoading, isSuccess, isError, data]);
@@ -176,6 +179,16 @@ const SignUp: React.FC<SignUpProps> = () => {
                                         formikProps={formikProps}
                                         name="schoolName"
                                         InputString="Enter your school name"
+                                    />
+                                    <InputBox
+                                        formikProps={formikProps}
+                                        name="cityName"
+                                        InputString="Enter your City name"
+                                    />
+                                    <InputBox
+                                        formikProps={formikProps}
+                                        name="referral"
+                                        InputString="Enter your Referral's name"
                                     />
                                 </View>
                                 <View

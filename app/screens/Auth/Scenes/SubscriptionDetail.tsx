@@ -352,7 +352,7 @@ const SubscriptionDetail = ({ route }) => {
                                         onChangeText={handleCouponChange}
                                         placeholderTextColor={'#B8C0C9'}
                                         style={styles.input}
-                                        placeholder={'Enter coupne'}
+                                        placeholder={'Enter coupon'}
                                         // {...props}
                                     />
                                 </View>
@@ -398,7 +398,7 @@ const SubscriptionDetail = ({ route }) => {
                                 }}
                             >
                                 <Discount width={20} height={20} />
-                                <Text style={{ ...FONTS.h5, color: '#2A368A', marginLeft: 6 }}>Apply Coupne</Text>
+                                <Text style={{ ...FONTS.h5, color: '#2A368A', marginLeft: 6 }}>Apply coupon</Text>
                             </Pressable>
                         </View>
 

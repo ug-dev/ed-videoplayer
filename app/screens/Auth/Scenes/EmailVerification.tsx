@@ -87,8 +87,8 @@ const EmailVerification = () => {
             <View style={{ width: '100%', padding: 18, alignItems: 'center' }}>
                 <Text style={FONTS.h3}>Email Verification pending</Text>
                 <Text style={styles.subtitle}>
-                    Hey Folk, Your email verification in pending please verify your app by cliking the link sent to your
-                    email {userData?.data.email}
+                    Hey Folk, Your email verification in pending please verify your app by clicking the link sent to
+                    your email {userData?.data.email}
                 </Text>
 
                 <PrimaryButton OnPress={() => resendEmail()} isLoading={isEmailLoading} InputText={'Resend Email'} />

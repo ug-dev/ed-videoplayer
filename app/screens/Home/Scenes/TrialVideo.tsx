@@ -89,7 +89,12 @@ const VideoScreen: React.FC<VideoProps> = (props) => {
                                 STYLES.defaultPlayerContainer,
                             ]}
                         >
-                            <VideoPlayer autoPlay={true} handleProgressChange={handleProgressChange} URL={VIDEO_URL} />
+                            <VideoPlayer
+                                fullscreen={fullscreen}
+                                autoPlay={true}
+                                handleProgressChange={handleProgressChange}
+                                URL={VIDEO_URL}
+                            />
                         </View>
                     ) : (
                         <View>

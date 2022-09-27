@@ -12,6 +12,7 @@ import { navigationRef } from '@app/navigators';
 import { useAddFavouriteMutation } from '@app/services/redux/api/favourite';
 import Loading from '@app/components/Loading';
 import LottieView from 'lottie-react-native';
+import Orientation, { LANDSCAPE, OrientationLocker, PORTRAIT } from 'react-native-orientation-locker';
 
 interface VideoProps {
     setShowTabNavigator?: () => void;
@@ -41,8 +42,10 @@ const VideoScreen: React.FC<VideoProps> = (props) => {
     }, [videoData]);
     useEffect(() => {
         if (fullscreen) {
+            // Orientation.lockToLandscape();
             SystemNavigationBar.navigationHide();
         } else {
+            // Orientation.lockToPortrait();
             SystemNavigationBar.navigationShow();
         }
     }, [fullscreen]);
@@ -73,6 +76,7 @@ const VideoScreen: React.FC<VideoProps> = (props) => {
         <>
             <StatusBar backgroundColor={'#FFF'} barStyle={'dark-content'} />
             <SafeAreaView style={STYLES.container}>
+                {/* <OrientationLocker orientation={LANDSCAPE} /> */}
                 <View style={STYLES.innerContainer}>
                     {!fullscreen && (
                         <View style={STYLES.topHeaderContainer}>
@@ -103,7 +107,12 @@ const VideoScreen: React.FC<VideoProps> = (props) => {
                                 STYLES.defaultPlayerContainer,
                             ]}
                         >
-                            <VideoPlayer autoPlay={false} handleProgressChange={handleProgressChange} URL={VIDEO_URL} />
+                            <VideoPlayer
+                                fullscreen={fullscreen}
+                                autoPlay={false}
+                                handleProgressChange={handleProgressChange}
+                                URL={VIDEO_URL}
+                            />
                         </View>
                     ) : (
                         <View>

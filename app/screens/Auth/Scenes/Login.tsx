@@ -52,6 +52,8 @@ const Login: React.FC<LoginProps> = () => {
     const handleLogin = async ({ email, password }) => {
         Keyboard.dismiss();
         const deviceId = await DeviceInfo.getAndroidId();
+        console.log({ deviceId });
+
         login({ email, password, device_id: deviceId });
     };
     return (

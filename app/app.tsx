@@ -9,6 +9,7 @@ import store from './services/redux/Store';
 import './utils/ignore-warnings';
 import * as storage from './utils/storage';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
+import Orientation from 'react-native-orientation-locker';
 
 export const NAVIGATION_PERSISTENCE_KEY = 'NAVIGATION_STATE';
 
@@ -28,6 +29,7 @@ function App() {
     const isInitialDataLoaded = true;
 
     useEffect(() => {
+        Orientation.lockToPortrait();
         DeviceInfo.getAndroidId().then((androidId) => {
             console.log({ deviceId: androidId });
         });

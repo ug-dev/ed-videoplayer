@@ -12,10 +12,10 @@ public class MainActivity extends ReactActivity {
     protected void onCreate(Bundle savedInstanceState) {
       SplashScreen.show(this);
       super.onCreate(savedInstanceState);
-      if (android.os.Build.VERSION.SDK_INT != android.os.Build.VERSION_CODES.O) {
-        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
-      }
-      getWindow().setFlags(WindowManager.LayoutParams.FLAG_SECURE, WindowManager.LayoutParams.FLAG_SECURE);
+      // if (android.os.Build.VERSION.SDK_INT != android.os.Build.VERSION_CODES.O) {
+      //   setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+      // }
+      // getWindow().setFlags(WindowManager.LayoutParams.FLAG_SECURE, WindowManager.LayoutParams.FLAG_SECURE);
     }
 
 

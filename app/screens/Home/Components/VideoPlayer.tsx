@@ -39,7 +39,8 @@ const VideoPlayer = ({ URL, handleProgressChange, autoPlay, fullscreen }) => {
         console.log({ videoRef });
 
         const backAction = () => {
-            videoRef.current.dismissFullscreenPlayer();
+            Orientation.lockToPortrait();
+            // videoRef.current.dismissFullscreenPlayer();
             return true;
         };
 
